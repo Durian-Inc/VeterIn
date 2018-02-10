@@ -9,10 +9,12 @@ from app.utils import uses_template
 
 DATABASE = 'app/database/vets.db'
 
-def get_veteran(username):
-    with sql.connect(DATABASE) as con:
-        cur = con.cursor()
-        cur.execute("IN")
+def get_veteran(uname):
+    command = "SELECT * FROM veterans where username= '%s' " %uname
+    print command
+    # with sql.connect(DATABASE) as con:
+    #     cur = con.cursor()
+    #     cur.execute("SELECT * FROM veterans where username= '%s' " %uname)
 
     
 @app.route('/')
