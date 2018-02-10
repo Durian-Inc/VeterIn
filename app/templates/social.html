@@ -1,0 +1,17 @@
+<ul class="posts">
+  {% for post in posts %}
+  <li class="post">
+    <div class="post___poster">
+      <img class="post___org-image" src="/static/img/{{ post.org_image }}">
+      <h3 class="post___org-name">{{ post.org_name }}</h3>
+    </div>
+    <div class="post___content">
+      <img class="post___media" src="/static/img/{{ post.media }}">
+      <div class="post___text">
+        <p class="post___blurb">{{ post.text }}</p>
+        <span class="post___date-time">{{ post.date_time }}</span>
+      </div>
+    </div>
+  </li>
+  {% endfor %}
+</ul>
