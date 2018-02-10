@@ -1,5 +1,7 @@
 import functools
 
+import sqlite3 as sql
+
 from flask import render_template
 
 
@@ -24,3 +26,17 @@ def uses_template(template):
                 return ctx
         return wrapped
     return wrapper
+
+# Database functions:
+
+def get_veteran(uname):
+    DATABASE = 'app/database/vets.db'
+    vet = None
+    command = "SELECT * FROM veterans where username = '%s' " %uname
+    with sql.connect(DATABASE) as con:
+        cur = con.cursor()
+        cur.execute(command)
+        vet = cur.fetchone()
+        cur.close()
+    return vet
+    

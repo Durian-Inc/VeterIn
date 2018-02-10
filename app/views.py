@@ -1,23 +1,10 @@
 # views.py
 
-import sqlite3 as sql
 from flask import render_template, abort
 from app import app
-from app.utils import uses_template
+from app.utils import uses_template, get_veteran
 
 
-DATABASE = 'app/database/vets.db'
-
-def get_veteran(uname):
-    vet = None
-    command = "SELECT * FROM veterans where username = '%s' " %uname
-    with sql.connect(DATABASE) as con:
-        cur = con.cursor()
-        cur.execute(command)
-        vet = cur.fetchone()
-        cur.close()
-    return vet
-    
 @app.route('/')
 def index():
     return render_template("index.html")
@@ -32,6 +19,7 @@ def vetpro(username):
     vet = get_veteran(username)
     if vet is None:
         abort(404)
+    
     veteran = {
         'username': vet[0],
         'name': vet[1],
@@ -52,6 +40,7 @@ def vetpro(username):
 @app.route('/organization/<id>', methods=['GET'])
 @uses_template('organization.html')
 def orgpro(id):
+    
     org = {
         'id': 0,
         'name': "MIL$",
