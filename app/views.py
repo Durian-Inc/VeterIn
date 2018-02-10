@@ -1,8 +1,7 @@
 # views.py
 
 import sqlite3 as sql
-from flask import render_template, flash, g
-
+from flask import render_template
 from app import app
 from app.utils import uses_template
 
@@ -23,7 +22,10 @@ def get_veteran(uname):
 def index():
     return render_template("index.html")
 
+# Profile functions : Veterans / Organizations
 
+
+# function to take veteran credentials and present them on the profile pagei
 @app.route('/veteran/<username>', methods=['GET'])
 @uses_template('veteran.html')
 def vetpro(username):
@@ -46,3 +48,24 @@ def vetpro(username):
     return {
         'veteran': veteran
     }
+
+
+@app.route('/organization/<id>', methods=['GET'])
+@uses_template('organization.html')
+def orgpro(id):
+    org = {
+        'id': 0,
+        'name': "MIL$",
+        'location': "here",
+        'image': "derek.png",
+        'bio': "is an up and coming crypto currency or something I think",
+        'url': "vetstoreusa.com",
+        'contact': "1-800-PLZ-DONT"
+    }
+
+    return {
+        'organization': org
+    }
+
+
+# End of Profile functions
