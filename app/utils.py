@@ -52,3 +52,12 @@ def get_organization(orgid):
         cur.close()
     return organization
     
+def get_posts():
+    posts = []
+    command = "SELECT * FROM posts as P, organization as O WHERE P.orgid = O.id"
+    with sql.connect(DATABASE) as con:
+        cur = con.cursor()
+        cur.execute(command)
+        posts = cur.fetchall()
+        cur.close
+    return posts

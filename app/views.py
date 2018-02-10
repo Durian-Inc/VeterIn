@@ -41,9 +41,6 @@ def vetpro(username):
 @uses_template('organization.html')
 def orgpro(id):
     org = get_organization(int(id))
-    for val in org:
-        print (val)
-    print (len(org))
     organization = {
         'id': org[0],
         'name': org[1],
