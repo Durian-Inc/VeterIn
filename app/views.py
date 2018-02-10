@@ -32,9 +32,6 @@ def vetpro(username):
     vet = get_veteran(username)
     if vet is None:
         abort(404)
-    for val in vet:
-        print val
-    print len(vet)
     veteran = {
         'username': vet[0],
         'name': vet[1],
