@@ -1,7 +1,6 @@
 # views.py
 
 from flask import render_template
-
 from app import app
 from app.utils import uses_template
 
@@ -11,6 +10,7 @@ def index():
     return render_template("index.html")
 
 
+# function to take veteran credentials and present them on the profile pagei
 @app.route('/veteran/<username>', methods=['GET'])
 @uses_template('veteran.html')
 def vetpro(username):
@@ -27,4 +27,19 @@ def vetpro(username):
 
     return {
         'veteran': vet
+    }
+
+
+@app.route('/organization/<id>', methods=['GET'])
+@uses_template('organization.html')
+def orgpro(id):
+    org = {
+        'id': 0,
+        'name': "MIL$"
+        'location': "here"
+        'image': "shit.png"
+    }
+
+    return {
+        'organization': org
     }
