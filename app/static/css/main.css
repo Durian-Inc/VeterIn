@@ -11,10 +11,20 @@ html, body {
   margin: 0;
 }
 
+svg {
+  height: calc(100% - 180px);
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
+}
+
 .content-wrapper {
   max-width: 1000px;
   margin: auto;
   padding: 0 24px;
+  position: relative;
+  z-index: 2;
 }
 
 .nav-bar {
@@ -42,12 +52,15 @@ nav ul {
 
 main {
   min-height: 300px;
+  padding: 30px 0;
 }
 
 .jumbotron {
+  padding: 40px 0;
   text-align: center;
 }
 
 footer {
   text-align: center;
+  color: white;
 }
