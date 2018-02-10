@@ -24,6 +24,7 @@ svg {
   margin: auto;
   padding: 0 24px;
   position: relative;
+  overflow: hidden;
   z-index: 2;
 }
 
@@ -36,6 +37,7 @@ svg {
 
 .nav-bar h2 {
   margin: 0;
+  white-space: nowrap;
 }
 
 nav ul {
@@ -48,6 +50,7 @@ nav ul {
 .nav___link a {
   padding: 3px 12px;
   text-decoration: none;
+  white-space: nowrap;
 }
 
 main {
