@@ -3,28 +3,34 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{% block title %}{% endblock %}</title>
-    <!-- Bootstrap core CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="https://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+    <link href="/static/css/main.css" rel="stylesheet">
+    <link href="/static/css/defaults.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    {% block head %}
+    {% endblock %}
   </head>
   <body>
-    <div class="container">
-      <div class="header clearfix">
+    <div class="content-wrapper">
+      <div class="nav-bar">
+        <h2>Veteran Mingle</h2>
         <nav>
-          <ul class="nav nav-pills pull-right">
-            <li role="presentation"><a href="/">Home</a></li>
-            <li role="presentation"><a href="/about">About</a></li>
-            <li role="presentation"><a href="http://flask.pocoo.org" target="_blank">More About Flask</a></li>
+          <ul>
+            <li class="nav___link"><a href="/">Home</a></li>
+            <li class="nav___link"><a href="/hiring/">Hiring</a></li>
+            <li class="nav___link"><a href="/login/">Log In</a></li>
           </ul>
         </nav>
       </div>
-      {% block body %}
-      {% endblock %}
+      <main>
+        {% block body %}
+        {% endblock %}
+      </main>
       <footer class="footer">
-        <p>© 2016 Your Name Here</p>
+        <p>© 2018 Durian Inc.</p>
       </footer>
-    </div> <!-- /container -->
+    </div>
   </body>
 </html>

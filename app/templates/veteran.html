@@ -1,0 +1,26 @@
+<!-- index.html-->
+
+{% extends "base.html" %}
+{% block head %}
+<link href="/static/css/veteran.css" rel="stylesheet">
+{% endblock %}
+{% block title %}{{ identity.username }}{% endblock %}
+{% block body %}
+<div class="veteran___header">
+  <img class="veteran___image">
+  <div class="veteran___meta">
+    <h1>{{ identity.name }}</h1>
+    <p class="veteran___bio">{{ identity.bio }}</p>
+    <p class="veteran___rank">{{ identity.bio }}</p>
+    <p class="veteran___branch">{{ identity.bio }}</p>
+    {% if identity.skills %}
+    {% set skills = identity.skills.split(' ') %}
+    <ul class="veteran___skills">
+    {% for skill in skills %}
+      <li class="veteran___skill">{{ skill }}</li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
