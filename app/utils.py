@@ -17,9 +17,11 @@ def uses_template(template):
                 except KeyError:
                     try:
                         return render_template(template_path,
-                                               organization=ctx['organization'])
+                                               organization=ctx['organization']
+                                               )
                     except KeyError:
-                        pass
+                        return render_template(template_path,
+                                               posts=ctx['posts'])
             else:
                 return ctx
         return wrapped

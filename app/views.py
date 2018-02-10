@@ -19,12 +19,27 @@ def get_veteran(uname):
     return vet
     
 @app.route('/')
+@uses_template('index.html')
 def index():
-    return render_template("index.html")
+    post = {
+        'org_name': "MIL$",
+        'org_image': "derek.png",
+        'text': "ShamHacks 2018",
+        'media': "derek.png",
+        'date_time': "February 9th, 2018"
+    }
 
-# Profile functions : Veterans / Organizations
+    return {
+        'posts': [post]
+    }
 
-
+post = {
+    'org_name': "MIL$",
+    'org_image': "derek.png",
+    'text': "ShamHacks 2018",
+    'media': "derek.png",
+    'date_time': "February 9th, 2018"
+}
 # function to take veteran credentials and present them on the profile pagei
 @app.route('/veteran/<username>', methods=['GET'])
 @uses_template('veteran.html')
@@ -71,4 +86,14 @@ def orgpro(id):
 def page_not_found(error):
     return render_template('404.html')
 
-# End of Profile functions
+# TODO
+# @app.route('/api/waypoints', methods=['GET'])
+
+# TODO
+# @app.route('/add/organization')
+
+# TODO
+# @app.route('/add/post/')
+
+# TODO
+# @app.route('/login')
