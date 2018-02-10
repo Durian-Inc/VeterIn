@@ -9,6 +9,8 @@ from app.utils import uses_template
 def index():
     return render_template("index.html")
 
+# Profile functions : Veterans / Organizations
+
 
 # function to take veteran credentials and present them on the profile pagei
 @app.route('/veteran/<username>', methods=['GET'])
@@ -20,7 +22,7 @@ def vetpro(username):
         'skills': "code,bees,music stuff,orange chicken",
         'years_served': 2,
         'rank': "man",
-        'branch': "emo bitch",
+        'branch': "lovely boy",
         'bio': "once from fair town, always from fair town",
         'image': "derek.png"
     }
@@ -35,11 +37,17 @@ def vetpro(username):
 def orgpro(id):
     org = {
         'id': 0,
-        'name': "MIL$"
-        'location': "here"
-        'image': "shit.png"
+        'name': "MIL$",
+        'location': "here",
+        'image': "derek.png",
+        'bio': "is an up and coming crypto currency or something I think",
+        'url': "vetstoreusa.com",
+        'contact': "1-800-PLZ-DONT"
     }
 
     return {
         'organization': org
     }
+
+
+# End of Profile functions
