@@ -6,22 +6,13 @@
 {% endblock %}
 {% block title %}{{ organization.name }}{% endblock %}
 {% block body %}
-<div class="veteran___header">
-  <img class="veteran___image" src="/static/img/{{ organization.image }}">
-  <div class="veteran___meta">
+<div class="organization___header">
+  <img class="organization___image" src="/static/img/{{ organization.image }}">
+  <div class="organization___name">
     <h1>{{ organization.name }}</h1>
-    <p class="veteran___bio">{{ organization.bio }}</p>
-    <p class="veteran___rank">{{ organization.rank }}</p>
-    <p class="veteran___branch">{{ organization.branch }}</p>
-    <p class="veteran___years">{{ organization.years_served }}</p>
-    {% if organization.skills %}
-    {% set skills = organization.skills.split(',') %}
-    <ul class="veteran___skills">
-    {% for skill in skills %}
-      <li class="veteran___skill">{{ skill }}</li>
-    {% endfor %}
-    </ul>
-    {% endif %}
+    <p class="organization___bio">{{ organization.bio }}</p>
+    <p class="organization___url">{{ organization.url }}</p>
+    <p class="organization___contact">{{ organization.contact }}</p>
   </div>
 </div>
 {% endblock %}
