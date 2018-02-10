@@ -4,17 +4,18 @@
 {% block head %}
 <link href="/static/css/veteran.css" rel="stylesheet">
 {% endblock %}
-{% block title %}{{ identity.username }}{% endblock %}
+{% block title %}{{ veteran.username }}{% endblock %}
 {% block body %}
 <div class="veteran___header">
-  <img class="veteran___image">
+  <img class="veteran___image" src="/static/img/{{ veteran.image }}">
   <div class="veteran___meta">
-    <h1>{{ identity.name }}</h1>
-    <p class="veteran___bio">{{ identity.bio }}</p>
-    <p class="veteran___rank">{{ identity.bio }}</p>
-    <p class="veteran___branch">{{ identity.bio }}</p>
-    {% if identity.skills %}
-    {% set skills = identity.skills.split(' ') %}
+    <h1>{{ veteran.name }}</h1>
+    <p class="veteran___bio">{{ veteran.bio }}</p>
+    <p class="veteran___rank">{{ veteran.rank }}</p>
+    <p class="veteran___branch">{{ veteran.branch }}</p>
+    <p class="veteran___years">{{ veteran.years_served }}</p>
+    {% if veteran.skills %}
+    {% set skills = veteran.skills.split(',') %}
     <ul class="veteran___skills">
     {% for skill in skills %}
       <li class="veteran___skill">{{ skill }}</li>
