@@ -10,6 +10,7 @@
   <img class="veteran___image" src="/static/img/{{ veteran.image }}">
   <div class="veteran___meta">
     <h1>{{ veteran.name }}</h1>
+<<<<<<< HEAD
     <p class="veteran___bio">{{ veteran.bio }}</p>
     <p class="veteran___rank">{{ veteran.rank }}</p>
     <p class="veteran___branch">{{ veteran.branch }}</p>
@@ -23,6 +24,18 @@
     {% endfor %}
     </ul>
     {% endif %}
+=======
+    <h6>{{ veteran.username }}</h6>
+    <p>{{ veteran.contact }}</p>
+>>>>>>> de12a5e57725070a572f874b8a197b7f9b3b435f
   </div>
+</div>
+<p class="veteran___bio">{{ veteran.bio }}</p>
+<div class="veteran___tidbits">
+  <h3>Info:</h3>
+  <p class="veteran___rank">{{ veteran.rank }}</p>
+  <p class="veteran___branch">{{ veteran.branch }}</p>
+  <p class="veteran___years">{{ veteran.years_served }}</p>
+  <p>{{ veteran.skills }}</p>
 </div>
 {% endblock %}
