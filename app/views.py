@@ -2,15 +2,25 @@
 
 from flask import render_template, abort
 from app import app
-from app.utils import uses_template, get_veteran, get_organization
+from app.utils import uses_template, get_veteran, get_organization, get_posts
 
 
 @app.route('/')
+@uses_template('index.html')
 def index():
-    return render_template("index.html")
+    posts = get_posts()
+    for val in posts:
+        post = {
+            'org_name': val[3],
+            'org_image': val[4],
+            'text': val[2],
+            'media': val[1],
+            'date_time': val[0]
+        }
 
-# Profile functions : Veterans / Organizations
-
+    return {
+        'posts': [post]
+    }
 
 # function to take veteran credentials and present them on the profile page
 @app.route('/veteran/<username>', methods=['GET'])
@@ -41,6 +51,9 @@ def vetpro(username):
 @uses_template('organization.html')
 def orgpro(id):
     org = get_organization(int(id))
+    if org is None:
+        abort(404)
+
     organization = {
         'id': org[0],
         'name': org[1],
@@ -61,4 +74,14 @@ def orgpro(id):
 def page_not_found(error):
     return render_template('404.html')
 
-# End of Profile functions
+# TODO
+# @app.route('/api/waypoints', methods=['GET'])
+
+# TODO
+# @app.route('/add/organization')
+
+# TODO
+# @app.route('/add/post/')
+
+# TODO
+# @app.route('/login')

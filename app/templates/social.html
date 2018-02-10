@@ -1,9 +1,12 @@
+{% block head %}
+<link href="/static/css/social.css" rel="stylesheet">
+{% endblock %}
 <ul class="posts">
   {% for post in posts %}
   <li class="post">
     <div class="post___poster">
       <img class="post___org-image" src="/static/img/{{ post.org_image }}">
-      <h3 class="post___org-name">{{ post.org_name }}</h3>
+      <h2 class="post___org-name">{{ post.org_name }}</h2>
     </div>
     <div class="post___content">
       <img class="post___media" src="/static/img/{{ post.media }}">

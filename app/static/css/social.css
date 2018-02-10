@@ -1,16 +1,33 @@
+.posts {
+  padding: 0;
+  margin: 40px 0 0 0;
+}
 .post {
-  margin: 10px;
+  list-style: none;
+  margin: 20px 0;
+  background: rgba(255,255,255,0.4);
   box-shadow: 0 0 10px 0 rgba(0,0,0,0.4);
+  border-radius: 14px;
 }
 
 .post___poster {
+  height: 80px;
   display: flex;
 }
 
 .post___org-image {
-  max-width: 100px;
+  height: 70px;
+  width: 70px;
+  border-radius: 100%;
+  margin: 10px 20px 10px 10px;
 }
 
 .post___content {
   display: flex;
+  height: 250px;
+}
+
+.post___media {
+  height: 220px;
+  margin: 15px;
 }

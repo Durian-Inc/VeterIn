@@ -21,9 +21,11 @@ def uses_template(template):
                 except KeyError:
                     try:
                         return render_template(template_path,
-                                               organization=ctx['organization'])
+                                               organization=ctx['organization']
+                                               )
                     except KeyError:
-                        pass
+                        return render_template(template_path,
+                                               posts=ctx['posts'])
             else:
                 return ctx
         return wrapped
@@ -32,7 +34,6 @@ def uses_template(template):
 # Database functions:
 
 def get_veteran(uname):
-    
     vet = None
     command = "SELECT * FROM veterans WHERE username = '%s' " %uname
     with sql.connect(DATABASE) as con:
@@ -54,10 +55,10 @@ def get_organization(orgid):
     
 def get_posts():
     posts = []
-    command = "SELECT * FROM posts as P, organization as O WHERE P.orgid = O.id"
+    command = "SELECT P.postdate, P.image, P.posttext, O.name, O.image FROM post as P, organization as O WHERE P.posterid = O.id"
     with sql.connect(DATABASE) as con:
         cur = con.cursor()
         cur.execute(command)
         posts = cur.fetchall()
-        cur.close
-    return posts
+        cur.close()
+    return posts[0:20]

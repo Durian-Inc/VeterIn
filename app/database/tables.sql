@@ -6,12 +6,12 @@ create table veterans(
 	rank varchar(200) not null,
 	branch varchar(200) not null,
 	bio varchar(120),
-	image varchar(80),
-	contact varchar(80)
+	image varchar(80) DEFAULT " ",
+	contact varchar(80),
 	primary key(username)
 );
 
-insert into veterans (username, name, skills, years_served, rank, branch, bio, image, contact, employed) values("25cent9", "Innocent Niyibizi", "Hacking, Computer Programming, Wire Tapping, Photography", 3, "Private","Army", "Hello, my name is Innocent and I was in the Army for three years. I was given tasks that are really under NDA", "inni.gif", "25cent9@gmail.com");
+insert into veterans (username, name, skills, years_served, rank, branch, bio, image, contact) values("25cent9", "Innocent Niyibizi", "Hacking, Computer Programming, Wire Tapping, Photography", 3, "Private","Army", "Hello, my name is Innocent and I was in the Army for three years. I was given tasks that are really under NDA", "inni.gif", "25cent9@gmail.com");
 
 CREATE TABLE organization (
 	id int not null,
@@ -30,7 +30,7 @@ INSERT INTO organization (id, name, location, image, url, industry, profit, bio,
 
 create table post(
 	postdate datetime not null,
-	image varchar(80),
+	image varchar(80) DEFAULT " ",
 	posttext varchar(120) not null,
 	posterid int not null,
 	primary key(postdate, posterid),
