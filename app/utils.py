@@ -1,7 +1,11 @@
 import functools
 
+import sqlite3 as sql
+
 from flask import render_template
 
+
+DATABASE = 'app/database/vets.db'
 
 def uses_template(template):
     """Wrap a function to add HTML template rendering functionality."""
@@ -26,3 +30,35 @@ def uses_template(template):
                 return ctx
         return wrapped
     return wrapper
+
+# Database functions:
+
+def get_veteran(uname):
+    vet = None
+    command = "SELECT * FROM veterans WHERE username = '%s' " %uname
+    with sql.connect(DATABASE) as con:
+        cur = con.cursor()
+        cur.execute(command)
+        vet = cur.fetchone()
+        cur.close()
+    return vet
+
+def get_organization(orgid):
+    organization = None
+    command = "SELECT * FROM organization WHERE id = %d " % orgid
+    with sql.connect(DATABASE) as con:
+        cur = con.cursor()
+        cur.execute(command)
+        organization = cur.fetchone()
+        cur.close()
+    return organization
+    
+def get_posts():
+    posts = []
+    command = "SELECT P.postdate, P.image, P.posttext, O.name, O.image FROM post as P, organization as O WHERE P.posterid = O.id"
+    with sql.connect(DATABASE) as con:
+        cur = con.cursor()
+        cur.execute(command)
+        posts = cur.fetchall()
+        cur.close()
+    return posts[0:20]
