@@ -10,16 +10,16 @@
   <img class="veteran___image" src="/static/img/{{ veteran.image }}">
   <div class="veteran___meta">
     <h1>{{ veteran.name }}</h1>
-    <h6>{{ veteran.username }}</h6>
+    <h5>{{ veteran.username }}</h5>
     <p>{{ veteran.contact }}</p>
   </div>
 </div>
 <p class="veteran___bio">{{ veteran.bio }}</p>
-<div class="veteran___tidbits">
-  <h3>Info:</h3>
-  <p class="veteran___rank">{{ veteran.rank }}</p>
-  <p class="veteran___branch">{{ veteran.branch }}</p>
-  <p class="veteran___years">{{ veteran.years_served }}</p>
-  <p>{{ veteran.skills }}</p>
+<h3 style="color: white">Info:</h3>
+<ul class="veteran___tidbits">
+  <li class="veteran___rank">Rank: {{ veteran.rank }}</p>
+  <li class="veteran___branch">Branch: {{ veteran.branch }}</p>
+  <li class="veteran___years">Years Served: {{ veteran.years_served }}</p>
+  <li class="veteran___skills">Skills: {{ veteran.skills }}</p>
 </div>
 {% endblock %}

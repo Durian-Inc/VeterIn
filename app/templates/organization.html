@@ -2,7 +2,7 @@
 
 {% extends "base.html" %}
 {% block head %}
-<link href="/static/css/veteran.css" rel="stylesheet">
+<link href="/static/css/organization.css" rel="stylesheet">
 {% endblock %}
 {% block title %}{{ organization.name }}{% endblock %}
 {% block body %}
@@ -10,9 +10,9 @@
   <img class="organization___image" src="/static/img/{{ organization.image }}">
   <div class="organization___name">
     <h1>{{ organization.name }}</h1>
-    <p class="organization___bio">{{ organization.bio }}</p>
     <p class="organization___url">{{ organization.url }}</p>
     <p class="organization___contact">{{ organization.contact }}</p>
   </div>
 </div>
+<p class="organization___bio">{{ organization.bio }}</p>
 {% endblock %}
