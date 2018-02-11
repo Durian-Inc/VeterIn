@@ -1,0 +1,51 @@
+.hires {
+  padding: 10px;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.hires___hire {
+  margin: 15px;
+  padding: 25px 15px;
+  flex: 1;
+  min-width: 280px;
+  max-width: 400px;
+  background: white;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.4);
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  color: black;
+}
+
+.hire___image {
+  width: 100%;
+}
+
+.hire___name {
+  margin: 15px 0 0 0 ;
+}
+
+.hire___sub {
+  margin: 10px 0 25px 0;
+}
+
+.hire___link {
+  background: khaki;
+  padding: 6px 18px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.4);
+  border-radius: 16px;
+  color: black;
+  text-decoration: none;
+  transition: .2s all ease-in-out;
+}
+.hire___link:hover {
+  background: gray;
+  color: white;
+}

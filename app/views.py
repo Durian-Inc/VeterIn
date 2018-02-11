@@ -1,20 +1,21 @@
 # views.py
 
-from flask import render_template, abort, session, request, jsonify
+from flask import render_template, abort, session, request, jsonify, redirect, url_for, flash
+from geopy.geocoders import Nominatim
+from random import uniform
 from json import dumps
 
 from app import app
-from app.utils import uses_template, get_veterans, get_organization, get_posts, auth_user, get_free_veterans, create_user, find_hash
+from app.utils import uses_template, get_veterans, get_organization, get_posts, auth_user, get_free_veterans, create_user, find_hash, get_row_count, create_organization, create_post
 
+app.secret_key = 'this-is-a-sham'
 
 @app.route('/')
 @uses_template('index.html')
 def index():
     sqlposts = get_posts()
     posts = []
-    # temp_dict = {'username': "daddyD", 'name':"Derek Hanger", 'skills': "Shoot, Gun, Good", 'years_served': 3, 'rank':"Private", 'branch':"Navy", 'bio':"Yes, hello I like work", 'image':"default.png", 'contact':"hireme@mail.com"}
-    # hashed_pass = "asdfioj23edw"
-    # create_user(temp_dict, hashed_pass)
+    print (get_row_count("post"))
     for val in sqlposts:
         post = {
             'org_name': val[3],
@@ -31,7 +32,7 @@ def index():
 
 
 # function to take veteran credentials and present them on the profile page
-@app.route('/veteran/<username>', methods=['GET'])
+@app.route('/veteran/<username>/', methods=['GET'])
 @uses_template('veteran.html')
 def vetpro(username):
     vet = get_veterans(username)
@@ -55,7 +56,7 @@ def vetpro(username):
     }
 
 
-@app.route('/organization/<id>', methods=['GET'])
+@app.route('/organization/<id>/', methods=['GET'])
 @uses_template('organization.html')
 def orgpro(id):
     org = get_organization(int(id))
@@ -86,7 +87,7 @@ def page_not_found(error):
     return render_template('404.html')
 
 
-@app.route('/api/waypoints', methods=['GET'])
+@app.route('/api/waypoints/', methods=['GET'])
 def api_waypoints():
     # lat long name link-to-profile
     orgs = get_organization()
@@ -100,7 +101,7 @@ def api_waypoints():
     return dumps(orgs_list)
 
 
-@app.route('/api/hires', methods=['GET'])
+@app.route('/api/hires/', methods=['GET'])
 def api_hires():
     if 'username' in session and auth_user(session['username']):
         vets = get_veterans()
@@ -131,31 +132,89 @@ def api_hires():
         return dumps(orgs_list)
 
 
-@app.route('/hiring')
+@app.route('/hiring/')
 def hiring():
     return render_template('hiring.html')
 
 
 # TODO
-# @app.route('/add/organization')
+# Make username based on session and not static value
+@app.route('/add/organization/', methods=['GET', 'POST'])
+def register_org():
+    # UPLOAD_FOLDER = '/path/to/the/uploads'
+    # ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+    if request.method == 'GET':
+        return render_template('orgregister.html')
+    if request.method == 'POST':
+        orgid = get_row_count("organization")+1
+        profit = request.form['profit']
+        if profit:
+            profit = 1
+        else:
+            profit = 0
+        geolocator = Nominatim()
+        location = geolocator.geocode(request.form['location'])
+        latlong = None
+        if location is not None:
+            latlong = str(location.latitude) + "," + str(location.longitude)
+        else:
+            latlong = str(uniform(36.9485, 38.9485)) + ","+str(uniform(90.7715, 92.7715))        
+        organization = {
+            'id': orgid,
+            'name': request.form['name'],
+            'location': latlong,
+            'url': request.form['url'],
+            'industry': request.form['industry'],
+            'profit': profit,
+            'bio': request.form['bio'],
+            'contact': request.form['contact'],
+            'image': "orgdefault.png"
+        }
+        flash("Successfully added " + organization['name'])
 
-# TODO
-# @app.route('/add/post/')
+        create_organization(organization, session['username'])
+        redirect_url = "/organization/"+str(orgid)
+
+        return redirect(redirect_url, code=302)
 
 
-# TODO
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/add/post/', methods=['GET', 'POST'])
+def register_post():
+    if request.method == 'GET':
+        return render_template('postcreate.html')
+    if request.method == 'POST':
+        post = {
+            'posttext': request.form['text'],
+            'image': request.form['media']
+        }
+        create_post(post, session['username'])
+        flash("Post submitted!")
+        return redirect('/', code=302)
+
+
+@app.route('/login/', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
         return render_template('login.html')
     if request.method == 'POST':
-        if auth_user(request.form['username'],
-                     find_hash(request.form['password'])) is not None:
-            session['username'] = request.form['username']
-            abort(404)
+        check_username = request.form['username'].lower()
+        check_passhash = find_hash(request.form['password'])
+        if auth_user(check_username, check_passhash) is not None:
+            session['username'] = check_username
+            flash("Successfully logged in, " + session['username'])
+        else:
+            flash("Failed to log in, try again!")
+    return redirect("/", code=302)
 
 
-@app.route('/register', methods=['GET', 'POST'])
+@app.route('/signout/', methods=['GET'])
+def signout():
+    session.pop("username")
+    flash("Signed out successfully!")
+    return redirect("/", code=302)
+
+
+@app.route('/register/', methods=['GET', 'POST'])
 def register():
     # UPLOAD_FOLDER = '/path/to/the/uploads'
     # ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
@@ -163,7 +222,7 @@ def register():
         return render_template('register.html')
     if request.method == 'POST':
         veteran = {
-            'username': request.form['username'],
+            'username': request.form['username'].lower(),
             'name': request.form['name'],
             'skills': request.form['skills'],
             'years_served': request.form['years_served'],
@@ -176,4 +235,13 @@ def register():
         pass_hash = find_hash(request.form['password'])
 
         create_user(veteran, pass_hash)
-        abort(404)
+        session['username'] = veteran['username']
+        flash("Successfully registered you, " + veteran['name'])
+        redirect_url = "/veterans/"+veteran['username']
+
+        return redirect(redirect_url, code=302)
+
+
+@app.route('/hub/')
+def hub():
+    return render_template('hub.html')

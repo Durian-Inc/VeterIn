@@ -1,3 +1,22 @@
+.jumbotron {
+  color: white;
+}
+
+.linko {
+  color: black;
+  background: khaki;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.4);
+  padding: 7px 18px;
+  border-radius: 20px;
+  text-decoration: none;
+  transition: .14s all ease-in-out;
+}
+
+.linko:hover {
+  background: gray;
+  color: white;
+}
+
 #map {
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.4);
 }

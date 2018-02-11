@@ -6,7 +6,7 @@ create table veterans(
 	rank varchar(200) not null,
 	branch varchar(200) not null,
 	bio varchar(120),
-	image varchar(80) DEFAULT " ",
+	image varchar(80) DEFAULT "deault.png",
 	contact varchar(80),
 	primary key(username)
 );
@@ -17,7 +17,7 @@ CREATE TABLE organization (
 	id int not null,
 	name varchar ( 80 ) not null,
 	location varchar ( 80 ) not null,
-	image varchar ( 80 ) not null,
+	image varchar ( 80 ) default "orgdefault.png",
 	url varchar ( 80 ) not null,
 	industry varchar ( 80 ) not null,
 	profit int check (profit <=1 and profit >=0),
@@ -26,7 +26,7 @@ CREATE TABLE organization (
 	PRIMARY KEY(id)
 );
 
-INSERT INTO organization (id, name, location, image, url, industry, profit, bio, contact) VALUES (1, "Innocent's Vet Store", "43.099,99.999", "vetstore.jpg", "iniyibzi.com", "Public Sector", 1, "Hello, Innocent's Vet Store is mostly aimed towards helping veterans buy from other veterans. Our motto is 'From Veterans, By Veterans' ", "(123)-buy-vets");
+INSERT INTO organization (id, name, location, image, url, industry, profit, bio, contact) VALUES (1, "Innocent's Vet Store", "37.948544,-91.7715303", "vetstore.jpg", "iniyibzi.com", "Public Sector", 1, "Hello, Innocent's Vet Store is mostly aimed towards helping veterans buy from other veterans. Our motto is 'From Veterans, By Veterans' ", "(123)-buy-vets");
 
 create table post(
 	postdate datetime not null,
@@ -52,10 +52,11 @@ create table partof(
 
 INSERT INTO partof (username, orgid, position) VALUES ("25cent9", 1, "owner");
 
-
 create table passhash(
 	username varchar(80) not null,
-	hash varchar(80) not null,
+	hash varchar(240) not null,
 	primary key(username, hash),
 	foreign key(username) references veterans(username)
 );
+
+insert into passhash(username, hash) values('25cent9', 'b1e55ce011276391b3884ed0a83b2333f57fb970d984b67cf5399fe07b24f988')

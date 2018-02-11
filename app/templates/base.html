@@ -15,21 +15,36 @@
   <body>
     <div class="content-wrapper">
       <div class="nav-bar">
-        <h2>Veteran Mingle</h2>
+        <a href="/">
+          <img src="/static/img/veterIN_LOGO.png">
+        </a>
         <nav>
           <ul>
             <li class="nav___link"><a href="/">Home</a></li>
             <li class="nav___link"><a href="/hiring/">Hiring</a></li>
-            <li class="nav___link"><a href="/login/">Log In</a></li>
+            {% if 'username' not in session %}
+            <li class="nav___link"><a href="/hub/">Log In</a></li>
+            {% else %}
+            <li class="nav___link"><a href="/signout/">Sign Out</a></li>
+            {% endif %}
           </ul>
         </nav>
       </div>
       <main>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul class=flashes>
+            {% for message in messages %}
+              <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
         {% block body %}
         {% endblock %}
       </main>
       <footer class="footer">
-        <p>© 2018 Durian Inc.</p>
+        © 2018 Durian Inc.
       </footer>
     </div>
     <div class="background-flourish">

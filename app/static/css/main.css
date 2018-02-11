@@ -4,20 +4,16 @@
 
 html {
   font-family: 'Lato', sans-serif;
-  color: white !important;
-}
-
-body {
-  background: #ffffff;
-  background: -moz-linear-gradient(top, #ffffff 0%, #ffffff 70%, #2a5a9e 71%);
-  background: -webkit-linear-gradient(top, #ffffff 0%,#ffffff 70%,#2a5a9e 71%);
-  background: linear-gradient(to bottom, #ffffff 0%,#ffffff 70%,#2a5a9e 71%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#2a5a9e',GradientType=0 );
+  background: #15664B;
 }
 
 html, body {
   min-height: 100%;
   margin: 0;
+}
+
+html body {
+  color: white;
 }
 
 .background-flourish {
@@ -42,12 +38,18 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 56px;
+  height: 64px;
+  color: white;
 }
 
-.nav-bar h2 {
-  margin: 0;
-  white-space: nowrap;
+.nav-bar a {
+  height: 100%;
+  padding: 8px;
+}
+
+.nav-bar img {
+  border-radius: 15px;
+  height: 100%;
 }
 
 nav ul {
@@ -70,7 +72,7 @@ nav ul {
 
 main {
   min-height: 300px;
-  padding: 30px 0;
+  padding: 30px 0 0 0;
 }
 
 .jumbotron {
@@ -78,10 +80,24 @@ main {
   text-align: center;
 }
 
+.flashes {
+  padding: 0;
+  list-style: none;
+  margin: 0;
+}
+
+.flashes li {
+  height: 40px;
+  color: white;
+  font-size: 1.2em;
+  background: rgba(255, 255, 255, 0.2);
+  line-height: 40px;
+  text-align: center;
+}
+
 footer {
   text-align: center;
-  color: white;
-  padding: 10px 0;
+  padding: 15px 0;
 }
 
 
