@@ -54,7 +54,10 @@ def get_veterans(uname=None):
         else:
             vet = cur.fetchall()
         cur.close()
-    return vet[0:10]
+    if vet is not None and len(vet) > 10:
+        return vet[0:10]
+    else: 
+        return vet
 
 
 def get_free_veterans():
@@ -164,11 +167,16 @@ def create_user(new_user, hashed_password):
     """
     columns = ', '.join(new_user.keys())
     placeholders = ', '.join('?' * len(new_user))
-    sql = "INSERT INTO veterans ({}) VALUES ({})".format(columns, placeholders)
-    conn = sqlite3.connect(DATABASE)
+    insert_command = "INSERT INTO veterans ({}) VALUES ({})".format(columns, placeholders)
+    conn = sql.connect(DATABASE)
     cur = conn.cursor()
-    cur.execute(sql, new_user.values)
+    cur.execute(insert_command, new_user.values())
     conn.commit()
-    hash_command = "INSERT INTO passhash (username, hash) VALUES ('%s', '%s')" %new_user["username"], %hashed_password
+    hash_command = "INSERT INTO passhash (username, hash) VALUES ('%s', '%s')".format(new_user["username"],hashed_password)
     cur.execute(hash_command)
     conn.close()
+
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS

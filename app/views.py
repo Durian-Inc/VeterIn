@@ -159,18 +159,21 @@ def login():
 def register():
     # UPLOAD_FOLDER = '/path/to/the/uploads'
     # ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
-    veteran = {
-        'username': request.form['username'],
-        'name': request.form['name'],
-        'skills': request.form['skills'],
-        'years_served': request.form['years_served'],
-        'rank': request.form['rank'],
-        'branch': request.form['branch'],
-        'bio': request.form['bio'],
-        'contact': request.form['contact'],
-        'image': "derek.png"
-    }
-    pass_hash = find_hash(request.form['password'])
+    if request.method == 'GET':
+        return render_template('register.html')
+    if request.method == 'POST':
+        veteran = {
+            'username': request.form['username'],
+            'name': request.form['name'],
+            'skills': request.form['skills'],
+            'years_served': request.form['years_served'],
+            'rank': request.form['rank'],
+            'branch': request.form['branch'],
+            'bio': request.form['bio'],
+            'contact': request.form['contact'],
+            'image': "default.png"
+        }
+        pass_hash = find_hash(request.form['password'])
 
-    create_user(veteran, pass_hash)
-    abort(404)
+        create_user(veteran, pass_hash)
+        abort(404)
