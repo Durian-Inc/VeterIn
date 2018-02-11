@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block body %}
+<form method="POST">
+        <label for="nameinput">Name</label>
+          <input type="text" class="form-control" id="nameinput" placeholder="Name" name="name">
+
+        <label for="skillsinput">Skills</label>
+          <input type="text" class="form-control" id="skillsinput" placeholder="Skills" name="skills">
+
+        <label for="yearsinput">Years Served</label>
+          <input type="text" class="form-control" id="yearsinput" placeholder="Years Served" name="years_served">
+
+        <label for="rankinput">Rank</label>
+          <input type="text" class="form-control" id="rankinput" placeholder="Rank" name="rank">
+
+        <label for="branchinput">Branch</label>
+          <input type="text" class="form-control" id="branchinput" placeholder="Branch" name="branch">
+
+        <label for="bioinput">Bio</label>
+          <input type="text" class="form-control" id="bioinput" placeholder="Bio" name="bio">
+
+        <label for="contactinput">Email</label>
+          <input type="text" class="form-control" id="contactinput" placeholder="Email" name="contact">
+
+        <label for="imageinput">Profile Picture</label>
+        <input type=file name="image">
+          
+        <label for="usernameinput" class="col-sm-2 col-form-label">Username</label>
+          <input type="text" class="form-control" id="usernameinput" placeholder="Username" name="username">
+
+        <label for="passwordinput" class="col-sm-2 col-form-label">Password</label>
+          <input type="password" class="form-control" id="passwordinput" placeholder="Password" name="password">
+
+          <small id="passwordhelp" class="form-text text-muted">
+            <b class="text-danger">Don't enter a valuable password here.</b> This site is not using encryption and all data is stored as plaintext.
+          </small>
+      <button type="submit" class="btn btn-primary">Log in</button>
+</form>
+{% endblock %}

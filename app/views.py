@@ -1,6 +1,6 @@
 # views.py
 
-from flask import render_template, abort
+from flask import render_template, abort, session
 from app import app
 from app.utils import uses_template, get_veterans, get_organization, get_posts, auth_user
 
@@ -94,6 +94,37 @@ def api_waypoints():
     return str(orgs_list)
 
 
+@app.route('/api/hires', methods=['GET'])
+def api_hires():
+    if 'username' in session and auth_user(session['username']):
+        vets = get_veterans()
+        vets_list = []
+        for vet in vets:
+            vets_list.append({
+                'username': vet[0],
+                'name': vet[1],
+                'skills': vet[2],
+                'years_served': vet[3],
+                'rank': vet[4],
+                'branch': vet[5],
+                'bio': vet[6],
+                'contact': vet[8],
+                'image': vet[7]
+            })
+        return str(vets_list)
+    else:
+        organizations = get_organization()
+        orgs_list = []
+        for org in organizations:
+            orgs_list.append({
+                'id': org[0],
+                'name': org[1],
+                'image': org[3],
+                'profit': org[6]
+            })
+        return str(orgs_list)
+
+
 # TODO
 # @app.route('/add/organization')
 
@@ -104,3 +135,21 @@ def api_waypoints():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     return render_template('login.html')
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+
+    veteran = {
+        'username': vet[0],
+        'name': vet[1],
+        'skills': vet[2],
+        'years_served': vet[3],
+        'rank': vet[4],
+        'branch': vet[5],
+        'bio': vet[6],
+        'contact': vet[8],
+        'image': vet[7]
+    }
+
+    return render_template('register.html')
