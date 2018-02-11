@@ -31,7 +31,7 @@ def index():
 
 
 # function to take veteran credentials and present them on the profile page
-@app.route('/veteran/<username>', methods=['GET'])
+@app.route('/veteran/<username>/', methods=['GET'])
 @uses_template('veteran.html')
 def vetpro(username):
     vet = get_veterans(username)
@@ -55,7 +55,7 @@ def vetpro(username):
     }
 
 
-@app.route('/organization/<id>', methods=['GET'])
+@app.route('/organization/<id>/', methods=['GET'])
 @uses_template('organization.html')
 def orgpro(id):
     org = get_organization(int(id))
@@ -86,7 +86,7 @@ def page_not_found(error):
     return render_template('404.html')
 
 
-@app.route('/api/waypoints', methods=['GET'])
+@app.route('/api/waypoints/', methods=['GET'])
 def api_waypoints():
     # lat long name link-to-profile
     orgs = get_organization()
@@ -100,7 +100,7 @@ def api_waypoints():
     return dumps(orgs_list)
 
 
-@app.route('/api/hires', methods=['GET'])
+@app.route('/api/hires/', methods=['GET'])
 def api_hires():
     if 'username' in session and auth_user(session['username']):
         vets = get_veterans()
@@ -131,7 +131,7 @@ def api_hires():
         return dumps(orgs_list)
 
 
-@app.route('/hiring')
+@app.route('/hiring/')
 def hiring():
     return render_template('hiring.html')
 
@@ -144,7 +144,7 @@ def hiring():
 
 
 # TODO
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login/', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
         return render_template('login.html')
@@ -155,7 +155,7 @@ def login():
             abort(404)
 
 
-@app.route('/register', methods=['GET', 'POST'])
+@app.route('/register/', methods=['GET', 'POST'])
 def register():
     # UPLOAD_FOLDER = '/path/to/the/uploads'
     # ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
@@ -177,3 +177,8 @@ def register():
 
         create_user(veteran, pass_hash)
         abort(404)
+
+
+@app.route('/hub/')
+def hub():
+    return render_template('hub.html')

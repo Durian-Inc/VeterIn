@@ -6,7 +6,13 @@
 <ul class="hires">
   {% for hire in hires %}
   <li class="hires___hire">
-    {{ hire }}
+    <h3>{{ hire.name }}</h3>
+    {% if hire.profit %}
+    <h5>non-profit</h5>
+    {% elif hire.years_served %}
+    <h5>Years Served: {{ hire.years_served }}</h5>
+    {% endif %}
   </li>
+  {% endfor %}
 </ul>
 {% endblock %}
