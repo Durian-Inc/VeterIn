@@ -1,18 +1,18 @@
 # views.py
 
-from flask import render_template, abort, session, request, jsonify
+from flask import render_template, abort, session, request, jsonify, redirect, url_for
 from json import dumps
 
 from app import app
 from app.utils import uses_template, get_veterans, get_organization, get_posts, auth_user, get_free_veterans, create_user, find_hash, get_row_count, create_organization
 
+app.secret_key = 'this-is-a-sham'
 
 @app.route('/')
 @uses_template('index.html')
 def index():
     sqlposts = get_posts()
     posts = []
-    print (get_row_count("veterans"))
     for val in sqlposts:
         post = {
             'org_name': val[3],
@@ -135,23 +135,25 @@ def hiring():
 
 
 # TODO
-@app.route('/add/organization')
+@app.route('/add/organization/', methods=['GET', 'POST'])
 def register_org():
     # UPLOAD_FOLDER = '/path/to/the/uploads'
     # ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
     if request.method == 'GET':
-        return render_template('register.html')
+        return render_template('orgregister.html')
     if request.method == 'POST':
+        orgid = get_row_count("organization")+1
         organization = {
-            'id': get_row_count("organization")+1,
+            'id': orgid,
             'name': request.form['name'],
             'location': request.form['location'],
             'url': request.form['url'],
             'industry': request.form['industry'],
-            'profit': request.form['profit'],
+            'profit': request.form["profit"],
             'bio': request.form['bio'],
             'contact': request.form['contact'],
-            'image': "orgdefault.png"
+            'image': "orgdefault.png",
+            'username': "griffinm"
         }
         create_organization(organization)
         abort(404)
@@ -161,15 +163,16 @@ def register_org():
 
 
 # TODO
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login/', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
         return render_template('login.html')
     if request.method == 'POST':
-        if auth_user(request.form['username'],
-                     find_hash(request.form['password'])) is not None:
-            session['username'] = request.form['username']
-            abort(404)
+        check_username = request.form['username']
+        check_passhash = find_hash(request.form['password'])
+        if auth_user(check_username, check_passhash) is not None:
+            session['username'] = check_username
+    return redirect("/", code=302)
 
 
 @app.route('/register', methods=['GET', 'POST'])

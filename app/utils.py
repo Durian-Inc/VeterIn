@@ -147,10 +147,9 @@ def auth_user(username, hashed_password=None):
     """
     valid = None
     if hashed_password is None:
-        command = "SELECT * FROM partof WHERE username = '%s' AND position = 'owner'" %username
+        command = "SELECT * FROM partof WHERE username = '{}' AND position = 'owner'".format(username)
     else:
-        command = ("SELECT * FROM passhash WHERE username = '%s' AND hash = '%s'" %username %hashed_password)
-    print(command)
+        command = "SELECT * FROM passhash WHERE username = '{}' AND hash = '{}' ".format(username, hashed_password)
     with sql.connect(DATABASE) as con:
         cur = con.cursor()
         cur.execute(command)
@@ -187,10 +186,12 @@ def create_organization(new_organization):
     insert_command = "INSERT INTO organization ({}) VALUES ({})".format(columns, placeholders)
     conn = sql.connect(DATABASE)
     cur = conn.cursor()
-    cur.execute(insert_command, new_user.values())
-    conn.commit()
-    curr.close()
-    conn.close()
+    print (insert_command, new_user.values())
+    
+    # cur.execute(insert_command, new_user.values())
+    # conn.commit()
+    # curr.close()
+    # conn.close()
 
 def get_row_count(table):
     """
