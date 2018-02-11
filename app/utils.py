@@ -149,7 +149,7 @@ def auth_user(username, hashed_password=None):
     if hashed_password is None:
         command = "SELECT * FROM partof WHERE username = '%s' AND position = 'owner'" %username
     else:
-        command = ("SELECT * FROM passhash WHERE username = '%s' AND hash = '%s'" %username %hashed_password)
+        command = "SELECT * FROM passhash WHERE username = '%s' AND hash ='%s'".format(username, hashed_password)
     print(command)
     with sql.connect(DATABASE) as con:
         cur = con.cursor()
@@ -169,7 +169,7 @@ def create_user(new_user, hashed_password):
     insert_command = "INSERT INTO veterans ({}) VALUES ({})".format(columns, placeholders)
     conn = sql.connect(DATABASE)
     cur = conn.cursor()
-    cur.execute(insert_command, new_user.values())
+    cur.execute(insert_command, list(new_user.values()))
     conn.commit()
     hash_command = "INSERT INTO passhash (username, hash) VALUES ('%s', '%s')".format(new_user["username"],hashed_password)
     cur.execute(hash_command)
