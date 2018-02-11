@@ -1,4 +1,4 @@
-# Veteran-Mingle
+# VeterIn
 > For ShamHacks 2018
 
 ### Setup
