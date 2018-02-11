@@ -59,6 +59,7 @@ def get_veterans(uname=None):
     else: 
         return vet
 
+
 def get_free_veterans():
     """
     @purpose: Get all of the free veterans in the database.
@@ -86,6 +87,7 @@ def get_free_veterans():
         if found_match == False:
             free_vets.append(vet)
     return free_vets
+
     
 def get_organization(orgid = None):
     """
@@ -159,7 +161,7 @@ def auth_user(username, hashed_password=None):
 def create_user(new_user, hashed_password):
     """
     @purpose: Adds a new user to the database and hashes their password
-    @args: List of all the elements that will be added to the database
+    @args: Dictionary of all the elements that will be added to the database
     @returns: 
     """
     columns = ', '.join(new_user.keys())
@@ -171,7 +173,39 @@ def create_user(new_user, hashed_password):
     conn.commit()
     hash_command = "INSERT INTO passhash (username, hash) VALUES ('%s', '%s')".format(new_user["username"],hashed_password)
     cur.execute(hash_command)
+    cur.close()
     conn.close()
+
+def create_organization(new_organization):
+    """
+    @purpose: Adds an organization to the database and adds the current user as the owner
+    @args: Dictionary of all the elements that will be added to the database
+    @returns: 
+    """
+    columns = ', '.join(new_user.keys())
+    placeholders = ', '.join('?' * len(new_user))
+    insert_command = "INSERT INTO organization ({}) VALUES ({})".format(columns, placeholders)
+    conn = sql.connect(DATABASE)
+    cur = conn.cursor()
+    cur.execute(insert_command, new_user.values())
+    conn.commit()
+    curr.close()
+    conn.close()
+
+def get_row_count(table):
+    """
+    @purpose: Function to get the amount of rows in a table
+    @args: The name of the table in question
+    @returns: The row count of the given table
+    """
+    row_count_string = "SELECT COUNT(*) FROM %s " %table
+    conn = sql.connect(DATABASE)
+    cur = conn.cursor()
+    cur.execute(row_count_string)
+    row_count = cur.fetchone()
+    cur.close()
+    conn.close()
+    return row_count[0]
 
 def allowed_file(filename):
     return '.' in filename and \

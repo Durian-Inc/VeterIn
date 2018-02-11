@@ -17,7 +17,7 @@ CREATE TABLE organization (
 	id int not null,
 	name varchar ( 80 ) not null,
 	location varchar ( 80 ) not null,
-	image varchar ( 80 ) not null,
+	image varchar ( 80 ) default "orgdefault.png",
 	url varchar ( 80 ) not null,
 	industry varchar ( 80 ) not null,
 	profit int check (profit <=1 and profit >=0),
