@@ -1,7 +1,7 @@
 # views.py
 
 from flask import render_template, abort, session, request, jsonify
-import json
+from json import dumps
 
 from app import app
 from app.utils import uses_template, get_veterans, get_organization, get_posts, auth_user, get_free_veterans, create_user, find_hash
@@ -97,7 +97,7 @@ def api_waypoints():
             'name': org[1],
             'location': org[2]
         })
-    return json.dumps(orgs_list)
+    return dumps(orgs_list)
 
 
 @app.route('/api/hires', methods=['GET'])
@@ -117,7 +117,7 @@ def api_hires():
                 'contact': vet[8],
                 'image': vet[7]
             })
-        return json.dumps(vets_list)
+        return dumps(vets_list)
     else:
         organizations = get_organization()
         orgs_list = []
@@ -128,7 +128,7 @@ def api_hires():
                 'image': org[3],
                 'profit': org[6]
             })
-        return json.dumps(orgs_list)
+        return dumps(orgs_list)
 
 
 @app.route('/hiring')
