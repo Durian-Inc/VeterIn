@@ -1,23 +1,10 @@
 # views.py
 
-import sqlite3 as sql
 from flask import render_template, abort
 from app import app
-from app.utils import uses_template
+from app.utils import uses_template, get_veteran, get_organization
 
 
-DATABASE = 'app/database/vets.db'
-
-def get_veteran(uname):
-    vet = None
-    command = "SELECT * FROM veterans where username = '%s' " %uname
-    with sql.connect(DATABASE) as con:
-        cur = con.cursor()
-        cur.execute(command)
-        vet = cur.fetchone()
-        cur.close()
-    return vet
-    
 @app.route('/')
 @uses_template('index.html')
 def index():
@@ -33,13 +20,7 @@ def index():
         'posts': [post]
     }
 
-post = {
-    'org_name': "MIL$",
-    'org_image': "derek.png",
-    'text': "ShamHacks 2018",
-    'media': "derek.png",
-    'date_time': "February 9th, 2018"
-}
+
 # function to take veteran credentials and present them on the profile pagei
 @app.route('/veteran/<username>', methods=['GET'])
 @uses_template('veteran.html')
@@ -47,6 +28,7 @@ def vetpro(username):
     vet = get_veteran(username)
     if vet is None:
         abort(404)
+
     veteran = {
         'username': vet[0],
         'name': vet[1],
@@ -67,18 +49,23 @@ def vetpro(username):
 @app.route('/organization/<id>', methods=['GET'])
 @uses_template('organization.html')
 def orgpro(id):
-    org = {
-        'id': 0,
-        'name': "MIL$",
-        'location': "here",
-        'image': "derek.png",
-        'bio': "is an up and coming crypto currency or something I think",
-        'url': "vetstoreusa.com",
-        'contact': "1-800-PLZ-DONT"
+    org = get_organization(int(id))
+    for val in org:
+        print(val)
+    print(len(org))
+    organization = {
+        'id': org[0],
+        'name': org[1],
+        'location': org[2],
+        'image': org[3],
+        'bio': org[7],
+        'url': org[4],
+        'contact': org[8],
+        'type': org[5]
     }
 
     return {
-        'organization': org
+        'organization': organization
     }
 
 
@@ -96,4 +83,6 @@ def page_not_found(error):
 # @app.route('/add/post/')
 
 # TODO
-# @app.route('/login')
+@app.route('/login', methods=['GET','POST'])
+def login():
+    return render_template('login.html')
