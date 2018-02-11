@@ -1,5 +1,12 @@
 print = console.log;
 
+var amerIcon = L.icon({
+  iconUrl: '../img/new.png',
+  iconSize: [48, 48],
+  iconAnchor: [22, 94],
+  popupAnchor: [-3, -76]
+});
+
 // Map object
 var map = L.map('map').setView([37.9485, -91.7715], 13);
 
@@ -23,7 +30,7 @@ xhttp.onreadystatechange = function() {
       loc = waypoint.location.split(',');
       loc[0] = Number(loc[0]);
       loc[1] = Number(loc[1]);
-      L.marker(loc).addTo(map).bindPopup(
+      L.marker(loc, {icon: amerIcon}).addTo(map).bindPopup(
         "<a href='" + address + "/organization/" + waypoint.id + "'>" +
         waypoint.name + "</a>"
       );
