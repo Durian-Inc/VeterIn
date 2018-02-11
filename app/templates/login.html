@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+<form method="POST">
+        <label for="usernameinput" class="col-sm-2 col-form-label">Username</label>
+          <input type="text" class="form-control" id="usernameinput" placeholder="Username" name="username">
+        <label for="passwordinput" class="col-sm-2 col-form-label">Password</label>
+          <input type="password" class="form-control" id="passwordinput" placeholder="Password" name="password">
+          <small id="passwordhelp" class="form-text text-muted">
+            <b class="text-danger">Don't enter a valuable password here.</b> This site is not using encryption and all data is stored as plaintext.
+          </small>
+      <button type="submit" class="btn btn-primary">Log in</button>
+</form>
