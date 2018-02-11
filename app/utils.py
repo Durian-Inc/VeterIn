@@ -39,17 +39,23 @@ def get_veterans(uname = None):
     @returns: A list with one or more veterans.
     """
     vet = None
+    taken_vets = None
+    free_vets = None
+    all_vets = None
     if uname:
         command = "SELECT * FROM veterans WHERE username = '%s' " %uname
     else:
-        command = "SELECT username, name, years_served, branch, rank FROM veterans"
+        taken_people = "SELECT V.username from veterans AS V, partof AS P WHERE V.username = P.username"
+        all_vets = "SELECT * FROM veterans"
     with sql.connect(DATABASE) as con:
         cur = con.cursor()
-        cur.execute(command)
         if uname:
+            cur.execute(command)
             vet = cur.fetchone()
         else:
-            vet = cur.fetchall()
+            cur.execute(taken_people)
+            taken_vets = cur.fetchall()
+            cur.execute()
         cur.close()
     return vet[0:10]
 
