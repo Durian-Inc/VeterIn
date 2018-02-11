@@ -4,7 +4,7 @@ from flask import render_template, abort, session, request, jsonify
 from json import dumps
 
 from app import app
-from app.utils import uses_template, get_veterans, get_organization, get_posts, auth_user, get_free_veterans, create_user, find_hash
+from app.utils import uses_template, get_veterans, get_organization, get_posts, auth_user, get_free_veterans, create_user, find_hash, get_row_count, create_organization
 
 
 @app.route('/')
@@ -12,9 +12,7 @@ from app.utils import uses_template, get_veterans, get_organization, get_posts, 
 def index():
     sqlposts = get_posts()
     posts = []
-    # temp_dict = {'username': "daddyD", 'name':"Derek Hanger", 'skills': "Shoot, Gun, Good", 'years_served': 3, 'rank':"Private", 'branch':"Navy", 'bio':"Yes, hello I like work", 'image':"default.png", 'contact':"hireme@mail.com"}
-    # hashed_pass = "asdfioj23edw"
-    # create_user(temp_dict, hashed_pass)
+    print (get_row_count("veterans"))
     for val in sqlposts:
         post = {
             'org_name': val[3],
@@ -137,7 +135,26 @@ def hiring():
 
 
 # TODO
-# @app.route('/add/organization')
+@app.route('/add/organization')
+def register_org():
+    # UPLOAD_FOLDER = '/path/to/the/uploads'
+    # ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+    if request.method == 'GET':
+        return render_template('register.html')
+    if request.method == 'POST':
+        organization = {
+            'id': get_row_count("organization")+1,
+            'name': request.form['name'],
+            'location': request.form['location'],
+            'url': request.form['url'],
+            'industry': request.form['industry'],
+            'profit': request.form['profit'],
+            'bio': request.form['bio'],
+            'contact': request.form['contact'],
+            'image': "orgdefault.png"
+        }
+        create_organization(organization)
+        abort(404)
 
 # TODO
 # @app.route('/add/post/')
