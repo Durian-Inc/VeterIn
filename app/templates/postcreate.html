@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block head %}
+<link href="/static/css/forms.css" rel="stylesheet">
+{% endblock %}
+{% block body %}
+<form method="POST">
+  <div>
+    <label for="textinput">Text</label>
+    <input type="text" class="form-control" id="textinput" placeholder="Talk about somethin'." name="text">
+  </div>
+  <div>
+    <label for="mediainput">Image</label>
+    <input type=file name="media">
+  </div>
+  <button type="submit" class="btn btn-primary">Post</button>
+</form>
+{% endblock %}

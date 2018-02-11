@@ -198,8 +198,6 @@ def create_organization(new_organization, ownerusername):
     conn.close()
 
 def create_post(post, ownerusername):
-    columns = ', '.join(post.keys())
-    placeholders = ', '.join('?' * len(post))
     # owner_insert_command = "INSERT INTO partof (username, orgid, position) VALUES ('{}', {}, 'owner')".format(ownerusername, new_organization["id"])
     get_org_id = "SELECT orgid FROM partof WHERE username = '{}'".format(ownerusername)
     
@@ -207,10 +205,13 @@ def create_post(post, ownerusername):
     cur = conn.cursor()
     cur.execute(get_org_id)
     orgid = cur.fetchone()
-    post['orgid'] = orgid[0]
+    post['posterid'] = orgid[0]
     post['postdate'] = str(date.today())
+    columns = ', '.join(post.keys())
+    placeholders = ', '.join('?' * len(post))
     insert_command = "INSERT INTO post ({}) VALUES ({})".format(columns, placeholders)
     cur.execute(insert_command, list(post.values()))
+    conn.commit()
     cur.close()
     conn.close()
 

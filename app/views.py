@@ -1,11 +1,12 @@
 # views.py
+
+from flask import render_template, abort, session, request, jsonify, redirect, url_for, flash
 from geopy.geocoders import Nominatim
 from random import uniform
-from flask import render_template, abort, session, request, jsonify, redirect, url_for
 from json import dumps
 
 from app import app
-from app.utils import uses_template, get_veterans, get_organization, get_posts, auth_user, get_free_veterans, create_user, find_hash, get_row_count, create_organization
+from app.utils import uses_template, get_veterans, get_organization, get_posts, auth_user, get_free_veterans, create_user, find_hash, get_row_count, create_organization, create_post
 
 app.secret_key = 'this-is-a-sham'
 
@@ -14,6 +15,7 @@ app.secret_key = 'this-is-a-sham'
 def index():
     sqlposts = get_posts()
     posts = []
+    print (get_row_count("post"))
     for val in sqlposts:
         post = {
             'org_name': val[3],
@@ -168,27 +170,47 @@ def register_org():
             'contact': request.form['contact'],
             'image': "orgdefault.png"
         }
+        flash("Successfully added " + organization['name'])
 
         create_organization(organization, session['username'])
         redirect_url = "/organization/"+str(orgid)
 
         return redirect(redirect_url, code=302)
 
-# TODO
-# @app.route('/add/post/')
+
+@app.route('/add/post/', methods=['GET', 'POST'])
+def register_post():
+    if request.method == 'GET':
+        return render_template('postcreate.html')
+    if request.method == 'POST':
+        post = {
+            'posttext': request.form['text'],
+            'image': request.form['media']
+        }
+        create_post(post, session['username'])
+        flash("Post submitted!")
+        return redirect('/', code=302)
 
 
-
-# TODO
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
         return render_template('login.html')
     if request.method == 'POST':
-        check_username = request.form['username']
+        check_username = request.form['username'].lower()
         check_passhash = find_hash(request.form['password'])
         if auth_user(check_username, check_passhash) is not None:
             session['username'] = check_username
+            flash("Successfully logged in, " + session['username'])
+        else:
+            flash("Failed to log in, try again!")
+    return redirect("/", code=302)
+
+
+@app.route('/signout/', methods=['GET'])
+def signout():
+    session.pop("username")
+    flash("Signed out successfully!")
     return redirect("/", code=302)
 
 
@@ -200,7 +222,7 @@ def register():
         return render_template('register.html')
     if request.method == 'POST':
         veteran = {
-            'username': request.form['username'],
+            'username': request.form['username'].lower(),
             'name': request.form['name'],
             'skills': request.form['skills'],
             'years_served': request.form['years_served'],
@@ -213,6 +235,8 @@ def register():
         pass_hash = find_hash(request.form['password'])
 
         create_user(veteran, pass_hash)
+        session['username'] = veteran['username']
+        flash("Successfully registered you, " + veteran['name'])
         redirect_url = "/veterans/"+veteran['username']
 
         return redirect(redirect_url, code=302)

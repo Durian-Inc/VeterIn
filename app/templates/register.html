@@ -1,39 +1,49 @@
 {% extends 'base.html' %}
+{% block head %}
+<link href="/static/css/forms.css" rel="stylesheet">
+{% endblock %}
 {% block body %}
 <form method=POST enctype=multipart/form-data>
-        <label for="nameinput">Name</label>
-          <input type="text" class="form-control" id="nameinput" placeholder="Name" name="name">
-
-        <label for="skillsinput">Skills</label>
-          <input type="text" class="form-control" id="skillsinput" placeholder="Skills" name="skills">
-
-        <label for="yearsinput">Years Served</label>
-          <input type="text" class="form-control" id="yearsinput" placeholder="Years Served" name="years_served">
-
-        <label for="rankinput">Rank</label>
-          <input type="text" class="form-control" id="rankinput" placeholder="Rank" name="rank">
-
-        <label for="branchinput">Branch</label>
-          <input type="text" class="form-control" id="branchinput" placeholder="Branch" name="branch">
-
-        <label for="bioinput">Bio</label>
-          <input type="text" class="form-control" id="bioinput" placeholder="Bio" name="bio">
-
-        <label for="contactinput">Email</label>
-          <input type="text" class="form-control" id="contactinput" placeholder="Email" name="contact">
-
-        <label for="imageinput">Profile Picture</label>
-        <input type=file name="image">
-          
-        <label for="usernameinput" class="col-sm-2 col-form-label">Username</label>
-          <input type="text" class="form-control" id="usernameinput" placeholder="Username" name="username">
-
-        <label for="passwordinput" class="col-sm-2 col-form-label">Password</label>
-          <input type="password" class="form-control" id="passwordinput" placeholder="Password" name="password">
-
-          <small id="passwordhelp" class="form-text text-muted">
-            <b class="text-danger">Don't enter a valuable password here.</b> This site is not using encryption and all data is stored as plaintext.
-          </small>
-      <button type="submit" class="btn btn-primary">Log in</button>
+  <div>
+    <label for="nameinput">Name</label>
+    <input type="text" class="form-control" id="nameinput" placeholder="John Doe" name="name">
+  </div>
+  <div>
+    <label for="skillsinput">Skills</label>
+    <input type="text" class="form-control" id="skillsinput" placeholder="Running, Hacking, Recursion" name="skills">
+  </div>
+  <div>
+    <label for="yearsinput">Years Served</label>
+    <input type="number" class="form-control" id="yearsinput" value="0" name="years_served">
+  </div>
+  <div>
+    <label for="rankinput">Rank</label>
+    <input type="text" class="form-control" id="rankinput" placeholder="Private" name="rank">
+  </div>
+  <div>
+    <label for="branchinput">Branch</label>
+    <input type="text" class="form-control" id="branchinput" placeholder="Army" name="branch">
+  </div>
+  <div>
+    <label for="bioinput">Bio</label>
+    <input type="text" class="form-control" id="bioinput" placeholder="Bio" name="bio">
+  </div>
+  <div>
+    <label for="contactinput">Email</label>
+    <input type="email" class="form-control" id="contactinput" placeholder="johnnydoey@gmail.com" name="contact">
+  </div>
+  <div>
+    <label for="imageinput">Profile Picture</label>
+    <input type=file class="form-control" id="imageinput" name="image">
+  </div>
+  <div>
+    <label for="usernameinput">Username</label>
+    <input type="text" class="form-control" id="usernameinput" placeholder="johnnydoey" name="username">
+  </div>
+  <div>
+    <label for="passwordinput">Password</label>
+    <input type="password" class="form-control" id="passwordinput" placeholder="starman" name="password">
+  </div>
+  <button type="submit" class="btn btn-primary">Log in</button>
 </form>
 {% endblock %}

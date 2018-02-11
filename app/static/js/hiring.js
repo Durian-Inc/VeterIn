@@ -16,7 +16,7 @@ xhttp.onreadystatechange = function() {
 
         var hireSub = document.createElement("h5");
         if (i.years_served) {
-          var subText = document.createTextNode("Years Served: " + i.years_served);
+          var sub = document.createTextNode("Years Served: " + i.years_served);
         } else if (!i.profit) {
           var sub = document.createTextNode("non-profit");
         } else {

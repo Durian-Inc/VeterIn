@@ -1,35 +1,41 @@
 {% extends 'base.html' %}
+{% block head %}
+<link href="/static/css/forms.css" rel="stylesheet">
+{% endblock %}
 {% block body %}
 <form method="POST">
-        <label for="nameinput">Name</label>
-          <input type="text" class="form-control" id="nameinput" placeholder="Name" name="name">
-
-        <label for="locaioninput">Location</label>
-          <input type="text" class="form-control" id="locationinput" placeholder="123 Seame Street" name="location">
-
-        <label for="url">URL</label>
-          <input type="text" class="form-control" id="urlinput" placeholder="vetstoreusa.com" name="url">
-
-        <label for="industry">Industry</label>
-          <input type="text" class="form-control" id="industryinput" placeholder="Private Sector" name="industry">
-
-        
-        <div>
-            <label for="profit">Profit</label>
-          <input type="radio" class="form-control" id="profit" placeholder="Profit" name="profit">
-          <label for="nonprofit">Non Profit</label>
-          <input type="radio" class="form-control" id="nonprofit" placeholder="Non Profit" name="nonprofit">
-        </div>
-
-        <label for="bioinput">Bio</label>
-          <input type="text" class="form-control" id="bioinput" placeholder="Bio" name="bio">
-
-        <label for="contactinput">Email</label>
-          <input type="text" class="form-control" id="contactinput" placeholder="Email" name="contact">
-
-        <label for="imageinput">Profile Picture</label>
-        <input type=file name="image">
-          
-      <button type="submit" class="btn btn-primary">Create</button>
+  <div>
+    <label for="nameinput">Name</label>
+    <input type="text" class="form-control" id="nameinput" placeholder="John Doe" name="name">
+  </div>
+  <div>
+    <label for="locaioninput">Location</label>
+    <input type="text" class="form-control" id="locationinput" placeholder="123 Seame Street" name="location">
+  </div>
+  <div>
+    <label for="url">URL</label>
+    <input type="text" class="form-control" id="urlinput" placeholder="acm.mst.edu" name="url">
+  </div>
+  <div>
+    <label for="industry">Industry</label>
+    <input type="text" class="form-control" id="industryinput" placeholder="Private Sector" name="industry">
+  </div>
+  <div>
+    <label for="profit">For Profit</label>
+    <input type="checkbox" class="form-control" id="profit" value="False" name="profit">
+  </div>
+  <div>
+    <label for="bioinput">Bio</label>
+    <input type="text" class="form-control" id="bioinput" placeholder="Bio" name="bio">
+  </div>
+  <div>
+    <label for="contactinput">Email</label>
+    <input type="email" class="form-control" id="contactinput" placeholder="johnnydoey@gmail.com" name="contact">
+  </div>
+  <div>
+    <label for="imageinput">Profile Picture</label>
+    <input type=file name="image">
+  </div>
+  <button type="submit" class="btn btn-primary">Create</button>
 </form>
 {% endblock %}

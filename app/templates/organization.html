@@ -12,9 +12,8 @@
     <h1>{{ organization.name }}</h1>
     <p class="organization___bio">{{ organization.bio }}</p>
     <p class="organization___type">{{ organization.type }}</p>
-    <p class="organization___url">{{ organization.url }}</p>
+    <a class="organization___url" href="http://{{ organization.url }}" style="color: white;">{{ organization.url }}</a>
     <p class="organization___contact">{{ organization.contact }}</p>
   </div>
 </div>
-<p class="organization___bio">{{ organization.bio }}</p>
 {% endblock %}
