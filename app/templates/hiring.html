@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block head %}
+<link href="/static/css/hiring.css" rel="stylesheet">
+{% endblock %}
+{% block body %}
+<ul class="hires">
+  {% for hire in hires %}
+  <li class="hires___hire">
+    {{ hire }}
+  </li>
+</ul>
+{% endblock %}
