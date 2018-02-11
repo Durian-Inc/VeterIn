@@ -4,18 +4,28 @@
 
 html {
   font-family: 'Lato', sans-serif;
+  color: white !important;
+}
+
+body {
+  background: #ffffff;
+  background: -moz-linear-gradient(top, #ffffff 0%, #ffffff 70%, #2a5a9e 71%);
+  background: -webkit-linear-gradient(top, #ffffff 0%,#ffffff 70%,#2a5a9e 71%);
+  background: linear-gradient(to bottom, #ffffff 0%,#ffffff 70%,#2a5a9e 71%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#2a5a9e',GradientType=0 );
 }
 
 html, body {
-  height: 100%;
+  min-height: 100%;
   margin: 0;
 }
 
-svg {
-  height: calc(100% - 180px);
-  width: 100%;
+.background-flourish {
   position: absolute;
-  bottom: 0;
+  width: 100%;
+  height: 400px;
+  background: #15664B;
+  top: 0;
   z-index: 1;
 }
 
@@ -24,6 +34,7 @@ svg {
   margin: auto;
   padding: 0 24px;
   position: relative;
+  overflow: hidden;
   z-index: 2;
 }
 
@@ -36,6 +47,7 @@ svg {
 
 .nav-bar h2 {
   margin: 0;
+  white-space: nowrap;
 }
 
 nav ul {
@@ -48,6 +60,12 @@ nav ul {
 .nav___link a {
   padding: 3px 12px;
   text-decoration: none;
+  white-space: nowrap;
+  color: white;
+  transition: .1s color ease-in-out;
+}
+.nav___link a:hover {
+  color: rgba(255,255,255,0.6);
 }
 
 main {
@@ -56,13 +74,14 @@ main {
 }
 
 .jumbotron {
-  padding: 40px 0;
+  padding: 40px 0 70px 0;
   text-align: center;
 }
 
 footer {
   text-align: center;
   color: white;
+  padding: 10px 0;
 }
 
 

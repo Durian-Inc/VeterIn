@@ -1,0 +1,50 @@
+.posts {
+  padding: 0;
+  margin: 40px 0 0 0;
+}
+.post {
+  list-style: none;
+  margin: 20px 0;
+  background: rgba(255,255,255,0.6);
+  box-shadow: 0 0 10px 0 rgba(0,0,0,0.4);
+  border-radius: 14px;
+}
+
+.post___poster {
+  height: 80px;
+  display: flex;
+}
+
+.post___org-image {
+  height: 70px;
+  width: 70px;
+  border-radius: 100%;
+  margin: 10px 20px 10px 10px;
+}
+
+.post___content {
+  display: flex;
+  padding: 20px;
+}
+.post___text {
+  width: 100%;
+}
+
+.post___blurb {
+  margin: 0 0 15px 0;
+}
+
+.post___media {
+  display: flex;
+  height: 350px;
+  justify-content: center;
+  align-items:center;
+}
+
+.post___media img {
+  height: 350px;
+}
+
+.post___date-time {
+  float: right;
+}

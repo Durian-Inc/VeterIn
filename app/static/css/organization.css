@@ -1,16 +1,14 @@
-.post {
-  margin: 10px;
-  box-shadow: 0 0 10px 0 rgba(0,0,0,0.4);
-}
-
-.post___poster {
+.organization___header {
   display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 80px;
 }
 
-.post___org-image {
-  max-width: 100px;
+.organization___image {
+  max-height: 200px;
+  margin-right: 30px;
 }
 
-.post___content {
-  display: flex;
+.organization___bio {
+  color: white;
 }

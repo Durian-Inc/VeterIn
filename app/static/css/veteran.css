@@ -1,7 +1,22 @@
 .veteran___header {
   display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 80px;
 }
 
 .veteran___image {
-  max-width: 300px;
+  max-height: 200px;
+  margin-right: 30px;
+}
+
+.veteran___meta h1 {
+  margin: 0;
+}
+
+.veteran___meta h5 {
+  margin: 0;
+}
+
+.veteran___bio, .veteran___tidbits {
+  color: white;
 }
