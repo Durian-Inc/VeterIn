@@ -25,6 +25,10 @@ form div input {
   width: 100%;
 }
 
+form div textarea {
+  width: 100%;
+}
+
 form button {
   margin: 15px 0 0 0;
   width: 200px;

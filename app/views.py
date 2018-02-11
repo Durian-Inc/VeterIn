@@ -183,13 +183,18 @@ def register_post():
     if request.method == 'GET':
         return render_template('postcreate.html')
     if request.method == 'POST':
-        post = {
-            'posttext': request.form['text'],
-            'image': request.form['media']
-        }
-        create_post(post, session['username'])
-        flash("Post submitted!")
-        return redirect('/', code=302)
+        if 'username' in session:
+            flash("!!!!!" + str(request.form['media']) + "!!!!!")
+            post = {
+                'posttext': request.form['text'],
+                'image': " "
+            }
+            create_post(post, session['username'])
+            flash("Post submitted!")
+            return redirect('/', code=302)
+        else:
+            flash("Please log in first!")
+            return redirect('/', code=302)
 
 
 @app.route('/login/', methods=['GET', 'POST'])
