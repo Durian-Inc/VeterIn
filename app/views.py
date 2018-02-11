@@ -1,8 +1,8 @@
 # views.py
 
-from flask import render_template, abort
+from flask import render_template, abort, session, request
 from app import app
-from app.utils import uses_template, get_veterans, get_organization, get_posts, auth_user
+from app.utils import uses_template, get_veterans, get_organization, get_posts, auth_user, find_hash
 
 
 @app.route('/')
@@ -24,12 +24,7 @@ def index():
         'posts': posts
     }
 
-<<<<<<< HEAD
-
-# function to take veteran credentials and present them on the profile pagei
-=======
 # function to take veteran credentials and present them on the profile page
->>>>>>> 74471f4342326fcd884e8f7d2af9f1d93eaff744
 @app.route('/veteran/<username>', methods=['GET'])
 @uses_template('veteran.html')
 def vetpro(username):
@@ -58,18 +53,12 @@ def vetpro(username):
 @uses_template('organization.html')
 def orgpro(id):
     org = get_organization(int(id))
-<<<<<<< HEAD
-    for val in org:
-        print(val)
-    print(len(org))
-=======
     # org_posts = get_posts(int(id))
     # TODO
     # Import posts into the organization's page
     if org is None:
         abort(404)
 
->>>>>>> 74471f4342326fcd884e8f7d2af9f1d93eaff744
     organization = {
         'id': org[0],
         'name': org[1],
@@ -99,7 +88,14 @@ def page_not_found(error):
 # TODO
 # @app.route('/add/post/')
 
+
 # TODO
-@app.route('/login', methods=['GET','POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template('login.html')
+    if request.method == 'GET':
+        return render_template('login.html')
+    if request.method == 'POST':
+        if auth_user(request.form['username'],
+                     find_hash(request.form['password']) is not None:
+            session['username'] = request.form['username']
+            abort(404)
