@@ -2,7 +2,7 @@
 
 from flask import render_template, abort
 from app import app
-from app.utils import uses_template, get_veteran, get_organization, get_posts
+from app.utils import uses_template, get_veterans, get_organization, get_posts
 
 
 @app.route('/')
@@ -28,7 +28,7 @@ def index():
 @app.route('/veteran/<username>', methods=['GET'])
 @uses_template('veteran.html')
 def vetpro(username):
-    vet = get_veteran(username)
+    vet = get_veterans(username)
     if vet is None:
         abort(404)
     
@@ -53,6 +53,9 @@ def vetpro(username):
 @uses_template('organization.html')
 def orgpro(id):
     org = get_organization(int(id))
+    # org_posts = get_posts(int(id))
+    # TODO
+    # Import posts into the organization's page
     if org is None:
         abort(404)
 

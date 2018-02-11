@@ -33,36 +33,62 @@ def uses_template(template):
 
 # Database functions:
 
-def get_veteran(uname):
+def get_veterans(uname = None):
+    """
+    @purpose: Runs SQL commands to querey the database for information on veterans. 
+    @args: The username of the veteran. None if the username is not provided.
+    @returns: A list with one or more veterans.
+    """
     vet = None
-    command = "SELECT * FROM veterans WHERE username = '%s' " %uname
+    if uname:
+        command = "SELECT * FROM veterans WHERE username = '%s' " %uname
+    else:
+        command = "SELECT username, name, years_served, branch, rank FROM veterans"
     with sql.connect(DATABASE) as con:
         cur = con.cursor()
         cur.execute(command)
-        vet = cur.fetchone()
+        if uname:
+            vet = cur.fetchone()
+        else:
+            vet = cur.fetchall()
         cur.close()
-    return vet
+    return vet[0:10]
 
-def get_organization(orgid):
+def get_organization(orgid = None):
+    """
+    @purpose: Runs SQL commands to querey the database for information on organizations. 
+    @args: The id of the organization. None if one is not provided and all organizations are needed.
+    @returns: A list with one or more organizations.
+    """
     organization = None
-    command = "SELECT * FROM organization WHERE id = %d " % orgid
+    if orgid is None:
+        command = "SELECT * FROM organization"
+    else:
+        command = "SELECT * FROM organization WHERE id = %d " % orgid
     with sql.connect(DATABASE) as con:
         cur = con.cursor()
         cur.execute(command)
-        organization = cur.fetchone()
+        if orgid:
+            organization = cur.fetchone()
+        else:
+            organization = cur.fetchall()
         cur.close()
-    return organization
+    return organization[0:10]
     
-def get_posts():
-    posts = []
-    command = "SELECT P.postdate, P.image, P.posttext, O.name, O.image FROM post as P, organization as O WHERE P.posterid = O.id"
+def get_posts(orgid = None):
+    """
+    @purpose: Runs SQL commands to querey the database for all the posts
+    @args: The id of the organization. None if one is not provided and all posts are needed.
+    @returns: A list with up to 10 posts.
+    """
+    posts = None
+    if orgid is None:
+        command = "SELECT P.postdate, P.image, P.posttext, O.name, O.image FROM post as P, organization as O WHERE P.posterid = O.id"
+    else:
+        command = "SELECT P.postdate, P.image, P.posttext, O.name, O.image FROM post AS P, organization AS O WHERE P.posterid = O.id AND O.id = %d " % orgid
     with sql.connect(DATABASE) as con:
         cur = con.cursor()
         cur.execute(command)
         posts = cur.fetchall()
         cur.close()
-    return posts[0:20]
-
-# def get_posts(orgid):
-
-#     pass
+    return posts[0:10]
