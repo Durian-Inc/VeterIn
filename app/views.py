@@ -15,6 +15,7 @@ app.secret_key = 'this-is-a-sham'
 def index():
     sqlposts = get_posts()
     posts = []
+    print (get_row_count("post"))
     for val in sqlposts:
         post = {
             'org_name': val[3],
