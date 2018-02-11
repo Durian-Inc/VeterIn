@@ -62,3 +62,7 @@ def get_posts():
         posts = cur.fetchall()
         cur.close()
     return posts[0:20]
+
+# def get_posts(orgid):
+
+#     pass
