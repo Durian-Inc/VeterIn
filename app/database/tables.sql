@@ -6,7 +6,7 @@ create table veterans(
 	rank varchar(200) not null,
 	branch varchar(200) not null,
 	bio varchar(120),
-	image varchar(80) DEFAULT " ",
+	image varchar(80) DEFAULT "deault.png",
 	contact varchar(80),
 	primary key(username)
 );
@@ -17,7 +17,7 @@ CREATE TABLE organization (
 	id int not null,
 	name varchar ( 80 ) not null,
 	location varchar ( 80 ) not null,
-	image varchar ( 80 ) not null,
+	image varchar ( 80 ) default "orgdefault.png",
 	url varchar ( 80 ) not null,
 	industry varchar ( 80 ) not null,
 	profit int check (profit <=1 and profit >=0),
