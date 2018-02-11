@@ -139,3 +139,10 @@ def auth_user(username, hashed_password = None):
         cur.close()
     return valid
 
+def create_user(new_user, hashed_password):
+    columns = ', '.join(new_user.keys())
+    placeholders = ', '.join('?' * len(new_user))
+    sql = "INSERT INTO veterans ({}) VALUES ({})".format(columns, placeholders)
+
+    print (sql, new_user.values)
+    # cur.execute(sql, values.values())
