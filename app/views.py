@@ -169,13 +169,14 @@ def register_org():
             'image': "orgdefault.png"
         }
 
-        create_organization(organization, "25cent9")
+        create_organization(organization, session['username'])
         redirect_url = "/organization/"+str(orgid)
 
         return redirect(redirect_url, code=302)
 
 # TODO
 # @app.route('/add/post/')
+
 
 
 # TODO

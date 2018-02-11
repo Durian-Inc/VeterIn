@@ -3,7 +3,7 @@ import functools
 import sqlite3 as sql
 
 from flask import render_template
-
+from datetime import date
 from hashlib import sha256
 
 DATABASE = 'app/database/vets.db'
@@ -194,6 +194,23 @@ def create_organization(new_organization, ownerusername):
     cur.execute(insert_command, list(new_organization.values()))
     conn.commit()
     cur.execute(owner_insert_command)
+    cur.close()
+    conn.close()
+
+def create_post(post, ownerusername):
+    columns = ', '.join(post.keys())
+    placeholders = ', '.join('?' * len(post))
+    # owner_insert_command = "INSERT INTO partof (username, orgid, position) VALUES ('{}', {}, 'owner')".format(ownerusername, new_organization["id"])
+    get_org_id = "SELECT orgid FROM partof WHERE username = '{}'".format(ownerusername)
+    
+    conn = sql.connect(DATABASE)
+    cur = conn.cursor()
+    cur.execute(get_org_id)
+    orgid = cur.fetchone()
+    post['orgid'] = orgid[0]
+    post['postdate'] = str(date.today())
+    insert_command = "INSERT INTO post ({}) VALUES ({})".format(columns, placeholders)
+    cur.execute(insert_command, list(post.values()))
     cur.close()
     conn.close()
 
