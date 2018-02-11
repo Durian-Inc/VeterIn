@@ -11,7 +11,7 @@
     <div class="post___content">
       <div class="post___text">
         <p class="post___blurb">{{ post.text }}</p>
-        {% if post.media == " " %}
+        {% if post.media != " " %}
         <div class="post___media">
           <img src="/static/img/{{ post.media }}">
         </div>

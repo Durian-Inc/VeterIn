@@ -76,8 +76,20 @@ def orgpro(id):
 def page_not_found(error):
     return render_template('404.html')
 
-# TODO
-# @app.route('/api/waypoints', methods=['GET'])
+
+@app.route('/api/waypoints', methods=['GET'])
+def api_waypoints():
+    # lat long name link-to-profile
+    orgs = get_organization()
+    orgs_list = []
+    for org in orgs:
+        orgs_list.append({
+            'id': org[0],
+            'name': org[1],
+            'location': org[2]
+        })
+    return str(orgs_list)
+
 
 # TODO
 # @app.route('/add/organization')
@@ -86,6 +98,6 @@ def page_not_found(error):
 # @app.route('/add/post/')
 
 # TODO
-@app.route('/login', methods=['GET','POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     return render_template('login.html')
