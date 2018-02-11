@@ -1,10 +1,13 @@
 # views.py
 
 from flask import render_template, abort, session, request, jsonify, redirect, url_for, flash
+from geopy.geocoders import Nominatim
+from random import uniform
 from json import dumps
 
 from app import app
-from app.utils import uses_template, get_veterans, get_organization, get_posts, auth_user, get_free_veterans, create_user, find_hash, get_row_count, create_organization
+from app.utils import uses_template, get_veterans, get_organization, get_posts,
+auth_user, get_free_veterans, create_user, find_hash, get_row_count, create_organization, create_post
 
 app.secret_key = 'this-is-a-sham'
 
@@ -135,6 +138,7 @@ def hiring():
 
 
 # TODO
+# Make username based on session and not static value
 @app.route('/add/organization/', methods=['GET', 'POST'])
 def register_org():
     # UPLOAD_FOLDER = '/path/to/the/uploads'
@@ -143,24 +147,49 @@ def register_org():
         return render_template('orgregister.html')
     if request.method == 'POST':
         orgid = get_row_count("organization")+1
+        profit = request.form['profit']
+        if profit:
+            profit = 1
+        else:
+            profit = 0
+        geolocator = Nominatim()
+        location = geolocator.geocode(request.form['location'])
+        latlong = None
+        if location is not None:
+            latlong = str(location.latitude) + "," + str(location.longitude)
+        else:
+            latlong = str(uniform(36.9485, 38.9485)) + ","+str(uniform(90.7715, 92.7715))        
         organization = {
             'id': orgid,
             'name': request.form['name'],
-            'location': request.form['location'],
+            'location': latlong,
             'url': request.form['url'],
             'industry': request.form['industry'],
-            'profit': request.form["profit"],
+            'profit': profit,
             'bio': request.form['bio'],
             'contact': request.form['contact'],
-            'image': "orgdefault.png",
-            'username': "griffinm"
+            'image': "orgdefault.png"
         }
-        create_organization(organization)
         flash("Successfully added " + organization['name'])
-        return redirect("/", code=302)
 
-# TODO
-# @app.route('/add/post/')
+        create_organization(organization, session['username'])
+        redirect_url = "/organization/"+str(orgid)
+
+        return redirect(redirect_url, code=302)
+
+
+@app.route('/add/post/')
+def register_post():
+    if request.method == 'GET':
+        return render_template('postcreate.html')
+    if request.method == 'POST':
+        post = {
+            'posttext': request.form['text'],
+            'image': request.form['media']
+        }
+        create_post(post, session['username'])
+        flash("Post submitted!")
+        return redirect('/', code=302)
 
 
 @app.route('/login/', methods=['GET', 'POST'])
@@ -208,7 +237,9 @@ def register():
         create_user(veteran, pass_hash)
         session['username'] = veteran['username']
         flash("Successfully registered you, " + veteran['name'])
-        return redirect("/", code=302)
+        redirect_url = "/veterans/"+veteran['username']
+
+        return redirect(redirect_url, code=302)
 
 
 @app.route('/hub/')
