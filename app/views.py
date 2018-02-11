@@ -1,6 +1,6 @@
 # views.py
 
-from flask import render_template, abort, session, request, jsonify, redirect, url_for
+from flask import render_template, abort, session, request, jsonify, redirect, url_for, flash
 from json import dumps
 
 from app import app
@@ -156,22 +156,32 @@ def register_org():
             'username': "griffinm"
         }
         create_organization(organization)
-        abort(404)
+        flash("Successfully added " + organization['name'])
+        return redirect("/", code=302)
 
 # TODO
 # @app.route('/add/post/')
 
 
-# TODO
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
         return render_template('login.html')
     if request.method == 'POST':
-        check_username = request.form['username']
+        check_username = request.form['username'].lower()
         check_passhash = find_hash(request.form['password'])
         if auth_user(check_username, check_passhash) is not None:
             session['username'] = check_username
+            flash("Successfully logged in, " + session['username'])
+        else:
+            flash("Failed to log in, try again!")
+    return redirect("/", code=302)
+
+
+@app.route('/signout/', methods=['GET'])
+def signout():
+    session.pop("username")
+    flash("Signed out successfully!")
     return redirect("/", code=302)
 
 
@@ -183,7 +193,7 @@ def register():
         return render_template('register.html')
     if request.method == 'POST':
         veteran = {
-            'username': request.form['username'],
+            'username': request.form['username'].lower(),
             'name': request.form['name'],
             'skills': request.form['skills'],
             'years_served': request.form['years_served'],
@@ -196,7 +206,9 @@ def register():
         pass_hash = find_hash(request.form['password'])
 
         create_user(veteran, pass_hash)
-        abort(404)
+        session['username'] = veteran['username']
+        flash("Successfully registered you, " + veteran['name'])
+        return redirect("/", code=302)
 
 
 @app.route('/hub/')

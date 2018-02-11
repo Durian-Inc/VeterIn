@@ -1,0 +1,31 @@
+form * {
+  display: block;
+  margin: 2px;
+}
+form div label {
+  color: white;
+  text-shadow: 0 0 2px black;
+}
+
+form {
+  display: inline-flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  max-height: 300px;
+}
+
+form div {
+  width: 200px;
+}
+
+form div input {
+  width: 100%;
+}
+
+form button {
+  margin: 15px 0 0 0;
+  width: 200px;
+}

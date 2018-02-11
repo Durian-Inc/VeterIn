@@ -4,11 +4,16 @@
 
 html {
   font-family: 'Lato', sans-serif;
+  background: #15664B;
 }
 
 html, body {
   min-height: 100%;
   margin: 0;
+}
+
+html body {
+  color: white;
 }
 
 .background-flourish {
@@ -33,13 +38,18 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 56px;
+  height: 64px;
   color: white;
 }
 
-.nav-bar h2 {
-  margin: 0;
-  white-space: nowrap;
+.nav-bar a {
+  height: 100%;
+  padding: 8px;
+}
+
+.nav-bar img {
+  border-radius: 15px;
+  height: 100%;
 }
 
 nav ul {
@@ -67,6 +77,21 @@ main {
 
 .jumbotron {
   padding: 40px 0 70px 0;
+  text-align: center;
+}
+
+.flashes {
+  padding: 0;
+  list-style: none;
+  margin: 0;
+}
+
+.flashes li {
+  height: 40px;
+  color: white;
+  font-size: 1.2em;
+  background: rgba(255, 255, 255, 0.2);
+  line-height: 40px;
   text-align: center;
 }
 
