@@ -26,7 +26,7 @@ CREATE TABLE organization (
 	PRIMARY KEY(id)
 );
 
-INSERT INTO organization (id, name, location, image, url, industry, profit, bio, contact) VALUES (1, "Innocent's Vet Store", "37.9485,-91.7715", "vetstore.jpg", "iniyibzi.com", "Public Sector", 1, "Hello, Innocent's Vet Store is mostly aimed towards helping veterans buy from other veterans. Our motto is 'From Veterans, By Veterans' ", "(123)-buy-vets");
+INSERT INTO organization (id, name, location, image, url, industry, profit, bio, contact) VALUES (1, "Innocent's Vet Store", "37.948544,-91.7715303", "vetstore.jpg", "iniyibzi.com", "Public Sector", 1, "Hello, Innocent's Vet Store is mostly aimed towards helping veterans buy from other veterans. Our motto is 'From Veterans, By Veterans' ", "(123)-buy-vets");
 
 create table post(
 	postdate datetime not null,

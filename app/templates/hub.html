@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block head %}
+<link href="/static/css/hub.css" rel="stylesheet">
+{% endblock %}
+{% block body %}
+<div class="hub___wrapper">
+  <div class="hub___left">
+    <div class="hub___hello">
+      <h1>Welcome to VeterIn</h1>
+    </div>
+    <div>
+      <img src="/static/img/derek.png">
+    </div>
+  </div>
+  <div class="hub___right">
+    <div>
+      <a href="/login/">Log In</a>
+      <span>OR</span>
+      <a href="/register/">Register</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

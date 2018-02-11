@@ -1,5 +1,6 @@
 # views.py
-
+from geopy.geocoders import Nominatim
+from random import uniform
 from flask import render_template, abort, session, request, jsonify, redirect, url_for
 from json import dumps
 
@@ -29,7 +30,7 @@ def index():
 
 
 # function to take veteran credentials and present them on the profile page
-@app.route('/veteran/<username>', methods=['GET'])
+@app.route('/veteran/<username>/', methods=['GET'])
 @uses_template('veteran.html')
 def vetpro(username):
     vet = get_veterans(username)
@@ -53,7 +54,7 @@ def vetpro(username):
     }
 
 
-@app.route('/organization/<id>', methods=['GET'])
+@app.route('/organization/<id>/', methods=['GET'])
 @uses_template('organization.html')
 def orgpro(id):
     org = get_organization(int(id))
@@ -84,7 +85,7 @@ def page_not_found(error):
     return render_template('404.html')
 
 
-@app.route('/api/waypoints', methods=['GET'])
+@app.route('/api/waypoints/', methods=['GET'])
 def api_waypoints():
     # lat long name link-to-profile
     orgs = get_organization()
@@ -98,7 +99,7 @@ def api_waypoints():
     return dumps(orgs_list)
 
 
-@app.route('/api/hires', methods=['GET'])
+@app.route('/api/hires/', methods=['GET'])
 def api_hires():
     if 'username' in session and auth_user(session['username']):
         vets = get_veterans()
@@ -129,12 +130,13 @@ def api_hires():
         return dumps(orgs_list)
 
 
-@app.route('/hiring')
+@app.route('/hiring/')
 def hiring():
     return render_template('hiring.html')
 
 
 # TODO
+# Make username based on session and not static value
 @app.route('/add/organization/', methods=['GET', 'POST'])
 def register_org():
     # UPLOAD_FOLDER = '/path/to/the/uploads'
@@ -143,20 +145,34 @@ def register_org():
         return render_template('orgregister.html')
     if request.method == 'POST':
         orgid = get_row_count("organization")+1
+        profit = request.form['profit']
+        if profit:
+            profit = 1
+        else:
+            profit = 0
+        geolocator = Nominatim()
+        location = geolocator.geocode(request.form['location'])
+        latlong = None
+        if location is not None:
+            latlong = str(location.latitude) + "," + str(location.longitude)
+        else:
+            latlong = str(uniform(36.9485, 38.9485)) + ","+str(uniform(90.7715, 92.7715))        
         organization = {
             'id': orgid,
             'name': request.form['name'],
-            'location': request.form['location'],
+            'location': latlong,
             'url': request.form['url'],
             'industry': request.form['industry'],
-            'profit': request.form["profit"],
+            'profit': profit,
             'bio': request.form['bio'],
             'contact': request.form['contact'],
-            'image': "orgdefault.png",
-            'username': "griffinm"
+            'image': "orgdefault.png"
         }
-        create_organization(organization)
-        abort(404)
+
+        create_organization(organization, "25cent9")
+        redirect_url = "/organization/"+str(orgid)
+
+        return redirect(redirect_url, code=302)
 
 # TODO
 # @app.route('/add/post/')
@@ -175,7 +191,7 @@ def login():
     return redirect("/", code=302)
 
 
-@app.route('/register', methods=['GET', 'POST'])
+@app.route('/register/', methods=['GET', 'POST'])
 def register():
     # UPLOAD_FOLDER = '/path/to/the/uploads'
     # ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
@@ -196,4 +212,11 @@ def register():
         pass_hash = find_hash(request.form['password'])
 
         create_user(veteran, pass_hash)
-        abort(404)
+        redirect_url = "/veterans/"+veteran['username']
+
+        return redirect(redirect_url, code=302)
+
+
+@app.route('/hub/')
+def hub():
+    return render_template('hub.html')

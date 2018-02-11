@@ -108,7 +108,10 @@ def get_organization(orgid = None):
         else:
             organization = cur.fetchall()
         cur.close()
-    return organization[0:10]
+    if organization is not None and len(organization) > 10:
+        return organization[0:10]
+    else:
+        return organization
 
 
 def get_posts(orgid=None):
@@ -168,30 +171,31 @@ def create_user(new_user, hashed_password):
     insert_command = "INSERT INTO veterans ({}) VALUES ({})".format(columns, placeholders)
     conn = sql.connect(DATABASE)
     cur = conn.cursor()
-    cur.execute(insert_command, new_user.values())
+    cur.execute(insert_command, list(new_user.values()))
     conn.commit()
     hash_command = "INSERT INTO passhash (username, hash) VALUES ('%s', '%s')".format(new_user["username"],hashed_password)
     cur.execute(hash_command)
     cur.close()
     conn.close()
 
-def create_organization(new_organization):
+def create_organization(new_organization, ownerusername):
     """
     @purpose: Adds an organization to the database and adds the current user as the owner
     @args: Dictionary of all the elements that will be added to the database
     @returns: 
     """
-    columns = ', '.join(new_user.keys())
-    placeholders = ', '.join('?' * len(new_user))
+    columns = ', '.join(new_organization.keys())
+    placeholders = ', '.join('?' * len(new_organization))
+    owner_insert_command = "INSERT INTO partof (username, orgid, position) VALUES ('{}', {}, 'owner')".format(ownerusername, new_organization["id"])
     insert_command = "INSERT INTO organization ({}) VALUES ({})".format(columns, placeholders)
     conn = sql.connect(DATABASE)
     cur = conn.cursor()
-    print (insert_command, new_user.values())
-    
-    # cur.execute(insert_command, new_user.values())
-    # conn.commit()
-    # curr.close()
-    # conn.close()
+      
+    cur.execute(insert_command, list(new_organization.values()))
+    conn.commit()
+    cur.execute(owner_insert_command)
+    cur.close()
+    conn.close()
 
 def get_row_count(table):
     """
