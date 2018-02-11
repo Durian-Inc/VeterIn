@@ -6,7 +6,7 @@ create table veterans(
 	rank varchar(200) not null,
 	branch varchar(200) not null,
 	bio varchar(120),
-	image varchar(80) DEFAULT " ",
+	image varchar(80) DEFAULT "deault.png",
 	contact varchar(80),
 	primary key(username)
 );
