@@ -8,8 +8,9 @@ from app.utils import uses_template, get_veteran, get_organization, get_posts
 @app.route('/')
 @uses_template('index.html')
 def index():
-    posts = get_posts()
-    for val in posts:
+    sqlposts = get_posts()
+    posts = []
+    for val in sqlposts:
         post = {
             'org_name': val[3],
             'org_image': val[4],
@@ -17,9 +18,10 @@ def index():
             'media': val[1],
             'date_time': val[0]
         }
+        posts.append(post)
 
     return {
-        'posts': [post]
+        'posts': posts
     }
 
 # function to take veteran credentials and present them on the profile page
