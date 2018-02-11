@@ -51,3 +51,11 @@ create table partof(
 );
 
 INSERT INTO partof (username, orgid, position) VALUES ("25cent9", 1, "owner");
+
+
+create table passhash(
+	username varchar(80) not null,
+	hash varchar(80) not null,
+	primary key(username, hash),
+	foreign key(username) references veterans(username)
+);

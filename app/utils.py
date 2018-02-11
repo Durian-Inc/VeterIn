@@ -32,7 +32,6 @@ def uses_template(template):
     return wrapper
 
 # Database functions:
-
 def get_veterans(uname = None):
     """
     @purpose: Runs SQL commands to querey the database for information on veterans. 
@@ -92,3 +91,23 @@ def get_posts(orgid = None):
         posts = cur.fetchall()
         cur.close()
     return posts[0:10]
+
+def auth_user(username, hashed_password = None):
+    """
+    @purpose: Check to see if user has authentication in our database. Whether that be password auth or organization auth.
+    @args: The username of the veteran and the hashed_password if needing to check password.
+    @returns: A tupe if the user is in the appropriate table. None if they are not in the right table. 
+    """
+    valid = None
+    if hashed_password is None:
+        command = "SELECT * FROM partof WHERE username = '%s' AND position = 'owner'" %username
+    else:
+        command = ("SELECT * FROM passhash WHERE username = '%s' AND hash = '%s'" %username %hashed_password)
+    print (command)
+    with sql.connect(DATABASE) as con:
+        cur = con.cursor()
+        cur.execute(command)
+        valid = cur.fetchone()
+        cur.close()
+    return valid
+
