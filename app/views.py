@@ -2,30 +2,38 @@
 
 from flask import render_template, abort
 from app import app
-from app.utils import uses_template, get_veteran, get_organization
+from app.utils import uses_template, get_veterans, get_organization, get_posts, auth_user
 
 
 @app.route('/')
 @uses_template('index.html')
 def index():
-    post = {
-        'org_name': "MIL$",
-        'org_image': "derek.png",
-        'text': "ShamHacks 2018",
-        'media': "derek.png",
-        'date_time': "February 9th, 2018"
-    }
+    sqlposts = get_posts()
+    posts = []
+    for val in sqlposts:
+        post = {
+            'org_name': val[3],
+            'org_image': val[4],
+            'text': val[2],
+            'media': val[1],
+            'date_time': val[0]
+        }
+        posts.append(post)
 
     return {
-        'posts': [post]
+        'posts': posts
     }
 
+<<<<<<< HEAD
 
 # function to take veteran credentials and present them on the profile pagei
+=======
+# function to take veteran credentials and present them on the profile page
+>>>>>>> 74471f4342326fcd884e8f7d2af9f1d93eaff744
 @app.route('/veteran/<username>', methods=['GET'])
 @uses_template('veteran.html')
 def vetpro(username):
-    vet = get_veteran(username)
+    vet = get_veterans(username)
     if vet is None:
         abort(404)
 
@@ -50,9 +58,18 @@ def vetpro(username):
 @uses_template('organization.html')
 def orgpro(id):
     org = get_organization(int(id))
+<<<<<<< HEAD
     for val in org:
         print(val)
     print(len(org))
+=======
+    # org_posts = get_posts(int(id))
+    # TODO
+    # Import posts into the organization's page
+    if org is None:
+        abort(404)
+
+>>>>>>> 74471f4342326fcd884e8f7d2af9f1d93eaff744
     organization = {
         'id': org[0],
         'name': org[1],

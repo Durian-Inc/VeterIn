@@ -6,16 +6,25 @@ html {
   font-family: 'Lato', sans-serif;
 }
 
+body {
+  background: #ffffff;
+  background: -moz-linear-gradient(top, #ffffff 0%, #ffffff 70%, #2a5a9e 71%);
+  background: -webkit-linear-gradient(top, #ffffff 0%,#ffffff 70%,#2a5a9e 71%);
+  background: linear-gradient(to bottom, #ffffff 0%,#ffffff 70%,#2a5a9e 71%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#2a5a9e',GradientType=0 );
+}
+
 html, body {
-  height: 100%;
+  min-height: 100%;
   margin: 0;
 }
 
 svg {
-  height: calc(100% - 180px);
+  min-height: 100%;
   width: 100%;
   position: absolute;
   bottom: 0;
+  top: 130px;
   z-index: 1;
 }
 
@@ -66,6 +75,7 @@ main {
 footer {
   text-align: center;
   color: white;
+  padding: 10px 0;
 }
 
 
