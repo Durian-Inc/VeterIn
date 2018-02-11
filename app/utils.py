@@ -56,9 +56,7 @@ def get_veterans(uname=None):
         cur.close()
     return vet[0:10]
 
-<<<<<<< HEAD
-def get_organization(orgid=None):
-=======
+
 def get_free_veterans():
     """
     @purpose: Get all of the free veterans in the database.
@@ -86,9 +84,9 @@ def get_free_veterans():
         if found_match == False:
             free_vets.append(vet)
     return free_vets
+
     
 def get_organization(orgid = None):
->>>>>>> c433d10e1a1c02fd016aefe37328bdac9e82f3ea
     """
     @purpose: Runs SQL commands to querey the database for information on organizations. 
     @args: The id of the organization. None if one is not provided and all organizations are needed.
