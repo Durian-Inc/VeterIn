@@ -6,8 +6,7 @@ from random import uniform
 from json import dumps
 
 from app import app
-from app.utils import uses_template, get_veterans, get_organization, get_posts,
-auth_user, get_free_veterans, create_user, find_hash, get_row_count, create_organization, create_post
+from app.utils import uses_template, get_veterans, get_organization, get_posts, auth_user, get_free_veterans, create_user, find_hash, get_row_count, create_organization, create_post
 
 app.secret_key = 'this-is-a-sham'
 
