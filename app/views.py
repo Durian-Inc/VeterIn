@@ -1,6 +1,7 @@
 # views.py
 
 from flask import render_template, abort
+from json import dumps
 from app import app
 from app.utils import uses_template, get_veterans, get_organization, get_posts, auth_user
 
@@ -91,7 +92,7 @@ def api_waypoints():
             'name': org[1],
             'location': org[2]
         })
-    return str(orgs_list)
+    return dumps(orgs_list)
 
 
 # TODO
