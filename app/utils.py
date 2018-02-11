@@ -4,6 +4,7 @@ import sqlite3 as sql
 
 from flask import render_template
 
+from hashlib import sha256
 
 DATABASE = 'app/database/vets.db'
 
@@ -53,4 +54,9 @@ def get_organization(orgid):
         organization = cur.fetchone()
         cur.close()
     return organization
-    
+
+
+# password handling and hashing
+
+def find_hash(password):
+    return sha256(password.encode('utf-8')).hexdigest()
