@@ -31,7 +31,7 @@ def vetpro(username):
     vet = get_veteran(username)
     if vet is None:
         abort(404)
-    
+
     veteran = {
         'username': vet[0],
         'name': vet[1],
@@ -86,4 +86,6 @@ def page_not_found(error):
 # @app.route('/add/post/')
 
 # TODO
-# @app.route('/login')
+@app.route('/login', methods=['GET','POST'])
+def login():
+    return render_template('login.html')
