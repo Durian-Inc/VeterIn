@@ -9,11 +9,12 @@
 <div class="organization___header">
   <img class="organization___image" src="/static/img/{{ organization.image }}">
   <div class="organization___name">
-    <h1>{{ organization.name }}</h1>
-    <p class="organization___bio">{{ organization.bio }}</p>
+    <h2>{{ organization.name }}</h2>
+    <p class="organization___contact">{{ organization.contact }}</p>
     <p class="organization___type">{{ organization.type }}</p>
     <a class="organization___url" href="http://{{ organization.url }}" style="color: white;">{{ organization.url }}</a>
-    <p class="organization___contact">{{ organization.contact }}</p>
   </div>
+  <p class="organization___bio">{{ organization.bio }}</p>
 </div>
+{% include 'social.html' %}
 {% endblock %}

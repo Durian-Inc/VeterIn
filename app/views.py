@@ -60,7 +60,8 @@ def vetpro(username):
 @uses_template('organization.html')
 def orgpro(id):
     org = get_organization(int(id))
-    # org_posts = get_posts(int(id))
+    org_posts = get_posts(int(id))
+    org_stuff = []
     # TODO
     # Import posts into the organization's page
     if org is None:
@@ -77,8 +78,18 @@ def orgpro(id):
         'type': org[5]
     }
 
+    for val in org_posts:
+        org_stuff.append({
+            'org_name': val[3],
+            'org_image': val[4],
+            'text': val[2],
+            'media': val[1],
+            'date_time': val[0]
+        })
+
     return {
-        'organization': organization
+        'organization': organization,
+        'posts': org_stuff
     }
 
 

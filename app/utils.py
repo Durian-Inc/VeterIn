@@ -23,7 +23,8 @@ def uses_template(template):
                 except KeyError:
                     try:
                         return render_template(template_path,
-                                               organization=ctx['organization']
+                                               organization=ctx['organization'],
+                                               posts=ctx['posts']
                                                )
                     except KeyError:
                         return render_template(template_path,
@@ -43,7 +44,7 @@ def get_veterans(uname=None):
     """
     vet = None
     if uname:
-        command = "SELECT * FROM veterans WHERE username = '%s' ".format(uname)
+        command = "SELECT * FROM veterans WHERE username = '{}' ".format(uname)
     else:
         command = "SELECT * FROM veterans"
     with sql.connect(DATABASE) as con:
@@ -99,7 +100,7 @@ def get_organization(orgid=None):
     if orgid is None:
         command = "SELECT * FROM organization"
     else:
-        command = "SELECT * FROM organization WHERE id = %d " % orgid
+        command = "SELECT * FROM organization WHERE id = {} ".format(orgid)
     with sql.connect(DATABASE) as con:
         cur = con.cursor()
         cur.execute(command)
@@ -124,7 +125,7 @@ def get_posts(orgid=None):
     if orgid is None:
         command = "SELECT P.postdate, P.image, P.posttext, O.name, O.image FROM post as P, organization as O WHERE P.posterid = O.id"
     else:
-        command = "SELECT P.postdate, P.image, P.posttext, O.name, O.image FROM post AS P, organization AS O WHERE P.posterid = O.id AND O.id = %d " % orgid
+        command = "SELECT P.postdate, P.image, P.posttext, O.name, O.image FROM post AS P, organization AS O WHERE P.posterid = O.id AND O.id = {}".format(orgid)
     with sql.connect(DATABASE) as con:
         cur = con.cursor()
         cur.execute(command)
@@ -174,7 +175,7 @@ def create_user(new_user, hashed_password):
     cur = conn.cursor()
     cur.execute(insert_command, list(new_user.values()))
     conn.commit()
-    hash_command = "INSERT INTO passhash (username, hash) VALUES ('%s', '%s')".format(new_user["username"], hashed_password)
+    hash_command = "INSERT INTO passhash (username, hash) VALUES ('{}', '{}')".format(new_user["username"], hashed_password)
     cur.execute(hash_command)
     cur.close()
     conn.close()
@@ -223,7 +224,7 @@ def get_row_count(table):
     @args: The name of the table in question
     @returns: The row count of the given table
     """
-    row_count_string = "SELECT COUNT(*) FROM %s ".format(table)
+    row_count_string = "SELECT COUNT(*) FROM {} ".format(table)
     conn = sql.connect(DATABASE)
     cur = conn.cursor()
     cur.execute(row_count_string)
