@@ -140,9 +140,18 @@ def auth_user(username, hashed_password = None):
     return valid
 
 def create_user(new_user, hashed_password):
+    """
+    @purpose: Adds a new user to the database and hashes their password
+    @args: List of all the elements that will be added to the database
+    @returns: 
+    """
     columns = ', '.join(new_user.keys())
     placeholders = ', '.join('?' * len(new_user))
     sql = "INSERT INTO veterans ({}) VALUES ({})".format(columns, placeholders)
-
-    print (sql, new_user.values)
-    # cur.execute(sql, values.values())
+    conn = sqlite3.connect(DATABASE)
+    cur = conn.cursor()
+    cur.execute(sql, new_user.values)
+    conn.commit()
+    hash_command = "INSERT INTO passhash (username, hash) VALUES ('%s', '%s')" %new_user["username"], %hashed_password
+    cur.execute(hash_command)
+    conn.close()
