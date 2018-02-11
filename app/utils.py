@@ -3,7 +3,7 @@ import functools
 import sqlite3 as sql
 
 from flask import render_template
-from datetime import date
+from datetime import datetime
 from hashlib import sha256
 
 DATABASE = 'app/database/vets.db'
@@ -43,7 +43,7 @@ def get_veterans(uname=None):
     """
     vet = None
     if uname:
-        command = "SELECT * FROM veterans WHERE username = '%s' " %uname
+        command = "SELECT * FROM veterans WHERE username = '%s' ".format(uname)
     else:
         command = "SELECT * FROM veterans"
     with sql.connect(DATABASE) as con:
@@ -84,12 +84,12 @@ def get_free_veterans():
             if vet[0] == veter[0]:
                 found_match = True
                 break
-        if found_match == False:
+        if found_match is False:
             free_vets.append(vet)
     return free_vets
 
     
-def get_organization(orgid = None):
+def get_organization(orgid=None):
     """
     @purpose: Runs SQL commands to querey the database for information on organizations. 
     @args: The id of the organization. None if one is not provided and all organizations are needed.
@@ -160,6 +160,7 @@ def auth_user(username, hashed_password=None):
         cur.close()
     return valid
 
+
 def create_user(new_user, hashed_password):
     """
     @purpose: Adds a new user to the database and hashes their password
@@ -173,10 +174,11 @@ def create_user(new_user, hashed_password):
     cur = conn.cursor()
     cur.execute(insert_command, list(new_user.values()))
     conn.commit()
-    hash_command = "INSERT INTO passhash (username, hash) VALUES ('%s', '%s')".format(new_user["username"],hashed_password)
+    hash_command = "INSERT INTO passhash (username, hash) VALUES ('%s', '%s')".format(new_user["username"], hashed_password)
     cur.execute(hash_command)
     cur.close()
     conn.close()
+
 
 def create_organization(new_organization, ownerusername):
     """
@@ -198,8 +200,6 @@ def create_organization(new_organization, ownerusername):
     conn.close()
 
 def create_post(post, ownerusername):
-    columns = ', '.join(post.keys())
-    placeholders = ', '.join('?' * len(post))
     # owner_insert_command = "INSERT INTO partof (username, orgid, position) VALUES ('{}', {}, 'owner')".format(ownerusername, new_organization["id"])
     get_org_id = "SELECT orgid FROM partof WHERE username = '{}'".format(ownerusername)
     
@@ -207,10 +207,13 @@ def create_post(post, ownerusername):
     cur = conn.cursor()
     cur.execute(get_org_id)
     orgid = cur.fetchone()
-    post['orgid'] = orgid[0]
-    post['postdate'] = str(date.today())
+    post['posterid'] = orgid[0]
+    post['postdate'] = str(datetime.now())
+    columns = ', '.join(post.keys())
+    placeholders = ', '.join('?' * len(post))
     insert_command = "INSERT INTO post ({}) VALUES ({})".format(columns, placeholders)
     cur.execute(insert_command, list(post.values()))
+    conn.commit()
     cur.close()
     conn.close()
 
@@ -220,7 +223,7 @@ def get_row_count(table):
     @args: The name of the table in question
     @returns: The row count of the given table
     """
-    row_count_string = "SELECT COUNT(*) FROM %s " %table
+    row_count_string = "SELECT COUNT(*) FROM %s ".format(table)
     conn = sql.connect(DATABASE)
     cur = conn.cursor()
     cur.execute(row_count_string)
@@ -228,7 +231,3 @@ def get_row_count(table):
     cur.close()
     conn.close()
     return row_count[0]
-
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
