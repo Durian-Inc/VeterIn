@@ -10,9 +10,9 @@ from app.utils import uses_template, get_veterans, get_organization, get_posts, 
 def index():
     sqlposts = get_posts()
     posts = []
-    temp_dict = {'username': "daddyD", 'name':"Derek Hanger", 'skills': "Shoot, Gun, Good", 'years_served': 3, 'rank':"Private", 'branch':"Navy", 'bio':"Yes, hello I like work", 'image':"default.png", 'contact':"hireme@mail.com"}
-    hashed_pass = "asdfioj23edw"
-    create_user(temp_dict, hashed_pass)
+    # temp_dict = {'username': "daddyD", 'name':"Derek Hanger", 'skills': "Shoot, Gun, Good", 'years_served': 3, 'rank':"Private", 'branch':"Navy", 'bio':"Yes, hello I like work", 'image':"default.png", 'contact':"hireme@mail.com"}
+    # hashed_pass = "asdfioj23edw"
+    # create_user(temp_dict, hashed_pass)
     for val in sqlposts:
         post = {
             'org_name': val[3],
