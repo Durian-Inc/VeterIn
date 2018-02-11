@@ -39,26 +39,48 @@ def get_veterans(uname = None):
     @returns: A list with one or more veterans.
     """
     vet = None
-    taken_vets = None
-    free_vets = None
-    all_vets = None
     if uname:
         command = "SELECT * FROM veterans WHERE username = '%s' " %uname
     else:
-        taken_people = "SELECT V.username from veterans AS V, partof AS P WHERE V.username = P.username"
-        all_vets = "SELECT * FROM veterans"
+        command = "SELECT * FROM veterans"
     with sql.connect(DATABASE) as con:
         cur = con.cursor()
+        cur.execute(command)
         if uname:
-            cur.execute(command)
             vet = cur.fetchone()
         else:
-            cur.execute(taken_people)
-            taken_vets = cur.fetchall()
-            cur.execute()
+            vet = cur.fetchall()
         cur.close()
     return vet[0:10]
 
+def get_free_veterans():
+    """
+    @purpose: Get all of the free veterans in the database.
+    @args:
+    @returns: A list of tuple elements of all the free veterans. 
+    """
+    all_vets = None
+    free_vets = []
+    taken_vets = None
+    taken_vets_command = "SELECT username FROM partof"
+    all_vets_command = "SELECT * FROM veterans"
+    with sql.connect(DATABASE) as con:
+        cur = con.cursor()
+        cur.execute(all_vets_command)
+        all_vets = cur.fetchall()
+        cur.execute(taken_vets_command)
+        taken_vets = cur.fetchall()
+        cur.close()
+    for vet in all_vets:
+        found_match = False
+        for veter in taken_vets:
+            if vet[0] == veter[0]:
+                found_match = True
+                break
+        if found_match == False:
+            free_vets.append(vet)
+    return free_vets
+    
 def get_organization(orgid = None):
     """
     @purpose: Runs SQL commands to querey the database for information on organizations. 

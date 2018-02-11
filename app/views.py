@@ -2,7 +2,7 @@
 
 from flask import render_template, abort
 from app import app
-from app.utils import uses_template, get_veterans, get_organization, get_posts, auth_user
+from app.utils import uses_template, get_veterans, get_organization, get_posts, auth_user, get_free_veterans
 
 
 @app.route('/')
