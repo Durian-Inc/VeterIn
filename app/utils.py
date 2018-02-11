@@ -42,27 +42,53 @@ def get_veterans(uname=None):
     @returns: A list with one or more veterans.
     """
     vet = None
-    taken_vets = None
-    free_vets = None
-    all_vets = None
     if uname:
         command = "SELECT * FROM veterans WHERE username = '%s' " %uname
     else:
-        taken_people = "SELECT V.username from veterans AS V, partof AS P WHERE V.username = P.username"
-        all_vets = "SELECT * FROM veterans"
+        command = "SELECT * FROM veterans"
     with sql.connect(DATABASE) as con:
         cur = con.cursor()
+        cur.execute(command)
         if uname:
-            cur.execute(command)
             vet = cur.fetchone()
         else:
-            cur.execute(taken_people)
-            taken_vets = cur.fetchall()
-            cur.execute()
+            vet = cur.fetchall()
         cur.close()
     return vet[0:10]
 
+<<<<<<< HEAD
 def get_organization(orgid=None):
+=======
+def get_free_veterans():
+    """
+    @purpose: Get all of the free veterans in the database.
+    @args:
+    @returns: A list of tuple elements of all the free veterans. 
+    """
+    all_vets = None
+    free_vets = []
+    taken_vets = None
+    taken_vets_command = "SELECT username FROM partof"
+    all_vets_command = "SELECT * FROM veterans"
+    with sql.connect(DATABASE) as con:
+        cur = con.cursor()
+        cur.execute(all_vets_command)
+        all_vets = cur.fetchall()
+        cur.execute(taken_vets_command)
+        taken_vets = cur.fetchall()
+        cur.close()
+    for vet in all_vets:
+        found_match = False
+        for veter in taken_vets:
+            if vet[0] == veter[0]:
+                found_match = True
+                break
+        if found_match == False:
+            free_vets.append(vet)
+    return free_vets
+    
+def get_organization(orgid = None):
+>>>>>>> c433d10e1a1c02fd016aefe37328bdac9e82f3ea
     """
     @purpose: Runs SQL commands to querey the database for information on organizations. 
     @args: The id of the organization. None if one is not provided and all organizations are needed.
@@ -132,6 +158,19 @@ def auth_user(username, hashed_password=None):
     return valid
 
 
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+def create_user(new_user, hashed_password):
+    """
+    @purpose: Adds a new user to the database and hashes their password
+    @args: List of all the elements that will be added to the database
+    @returns: 
+    """
+    columns = ', '.join(new_user.keys())
+    placeholders = ', '.join('?' * len(new_user))
+    sql = "INSERT INTO veterans ({}) VALUES ({})".format(columns, placeholders)
+    conn = sqlite3.connect(DATABASE)
+    cur = conn.cursor()
+    cur.execute(sql, new_user.values)
+    conn.commit()
+    hash_command = "INSERT INTO passhash (username, hash) VALUES ('%s', '%s')" %new_user["username"], %hashed_password
+    cur.execute(hash_command)
+    conn.close()

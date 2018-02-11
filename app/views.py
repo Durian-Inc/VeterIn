@@ -4,7 +4,7 @@ from flask import render_template, abort, session, request, jsonify
 import json
 
 from app import app
-from app.utils import uses_template, get_veterans, get_organization, get_posts, auth_user, find_hash
+from app.utils import uses_template, get_veterans, get_organization, get_posts, auth_user, get_free_veterans, create_user, find_hash
 
 
 @app.route('/')
@@ -12,6 +12,9 @@ from app.utils import uses_template, get_veterans, get_organization, get_posts, 
 def index():
     sqlposts = get_posts()
     posts = []
+    # temp_dict = {'username': "daddyD", 'name':"Derek Hanger", 'skills': "Shoot, Gun, Good", 'years_served': 3, 'rank':"Private", 'branch':"Navy", 'bio':"Yes, hello I like work", 'image':"default.png", 'contact':"hireme@mail.com"}
+    # hashed_pass = "asdfioj23edw"
+    # create_user(temp_dict, hashed_pass)
     for val in sqlposts:
         post = {
             'org_name': val[3],
