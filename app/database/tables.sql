@@ -6,12 +6,13 @@ create table veterans(
 	rank varchar(200) not null,
 	branch varchar(200) not null,
 	bio varchar(120),
-	image varchar(80) DEFAULT "deault.png",
+	image varchar(80) DEFAULT "default.png",
 	contact varchar(80),
 	primary key(username)
 );
 
 insert into veterans (username, name, skills, years_served, rank, branch, bio, image, contact) values("25cent9", "Innocent Niyibizi", "Hacking, Computer Programming, Wire Tapping, Photography", 3, "Private","Army", "Hello, my name is Innocent and I was in the Army for three years. I was given tasks that are really under NDA", "inni.gif", "25cent9@gmail.com");
+insert into veterans (username, name, skills, years_served, rank, branch, bio, image, contact) values("claymav", "Clay McGinnis", "Walking, Screaming, Recursion, The fine arts", 2, "Private","Air Force", "A long a time lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pretium purus at tempus euismod. Phasellus ac lacus sit amet ante blandit posuere. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam ac sagittis tellus. In interdum eros a dolor egestas, non feugiat erat sodales. Praesent quam enim, scelerisque facilisis diam at, efficitur blandit eros. Mauris sodales varius ultricies. ", "default.png", "mcginnis@claymav.com");
 
 CREATE TABLE organization (
 	id int not null,
@@ -26,7 +27,8 @@ CREATE TABLE organization (
 	PRIMARY KEY(id)
 );
 
-INSERT INTO organization (id, name, location, image, url, industry, profit, bio, contact) VALUES (1, "Innocent's Vet Store", "37.948544,-91.7715303", "vetstore.jpg", "iniyibzi.com", "Public Sector", 1, "Hello, Innocent's Vet Store is mostly aimed towards helping veterans buy from other veterans. Our motto is 'From Veterans, By Veterans' ", "(123)-buy-vets");
+INSERT INTO organization (id, name, location, image, url, industry, profit, bio, contact) VALUES (1, "Innocent's Vet Store", "37.948544,-91.7715303", "orgdefault.png", "iniyibzi.com", "Public Sector", 1, "Hello, Innocent's Vet Store is mostly aimed towards helping veterans buy from other veterans. Our motto is 'From Veterans, By Veterans' ", "(123)-buy-vets");
+INSERT INTO organization (id, name, location, image, url, industry, profit, bio, contact) VALUES (2, "Clay's Vet Store", "37.948244,-91.7715503", "orgdefault.png", "claymav.com", "Tech", 0, "Going to the mall? Well, it turns out you don't need to. Come to Clay's Vet Store and you can see it all.", "(321)-buy-tech");
 
 create table post(
 	postdate datetime not null,

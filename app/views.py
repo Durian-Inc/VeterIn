@@ -62,8 +62,6 @@ def orgpro(id):
     org = get_organization(int(id))
     org_posts = get_posts(int(id))
     org_stuff = []
-    # TODO
-    # Import posts into the organization's page
     if org is None:
         abort(404)
 
@@ -148,8 +146,6 @@ def hiring():
     return render_template('hiring.html')
 
 
-# TODO
-# Make username based on session and not static value
 @app.route('/add/organization/', methods=['GET', 'POST'])
 def register_org():
     # UPLOAD_FOLDER = '/path/to/the/uploads'
@@ -220,7 +216,7 @@ def login():
             flash("Successfully logged in, " + session['username'])
         else:
             flash("Failed to log in, try again!")
-    return redirect("/", code=302)
+        return redirect('/', code=302)
 
 
 @app.route('/signout/', methods=['GET'])
@@ -253,7 +249,7 @@ def register():
         create_user(veteran, pass_hash)
         session['username'] = veteran['username']
         flash("Successfully registered you, " + veteran['name'])
-        redirect_url = "/veterans/"+veteran['username']
+        redirect_url = "/veteran/"+veteran['username']
 
         return redirect(redirect_url, code=302)
 

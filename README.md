@@ -1,10 +1,27 @@
 # VeterIn
-> For ShamHacks 2018
+> Created for ShamHacks 2018 by Durian Inc.
+> Received 2nd place, and the team was awarded a prize worth $1,600
 
-### Setup
-1. Install python3
-2. Install pip3
-3. `pip3 install virtualenv`
-4. `pyvenv-3.6 env`
-5. `source env/bin/activate`
-6. `pip install -r requirements.txt`
+## Installation
+### Clone this repository
+```
+git clone https://github.com/Durian-Inc/VeterIn
+```
+
+### Install dependencies
+* Python 3.X
+* pip
+
+### Additional installation instructions
+* `pip install virtualenv`
+* `virtualenv env`
+* `source env/bin/activate`
+* `pip install -r requirements.txt`
+* `python3 run.py`
+* Navigate to http://localhost:5000/ in your browser
+
+## Troubleshooting
+Browse and create issues: https://github.com/Durian-Inc/VeterIn/issues
+## Licence
+License: MIT License
+
